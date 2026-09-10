@@ -1,0 +1,25 @@
+# Ambiente virtual
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDEs
+.vscode/
+.idea/
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Variáveis de ambiente e chaves
+.env
+
+# Dados brutos/processados
+data/raw/
+data/processed/
