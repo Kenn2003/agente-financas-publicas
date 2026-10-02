@@ -4,4 +4,5 @@ streamlit
 plotly
 networkx
 matplotlib 
-textwrap
+
+psycopg[binary]
