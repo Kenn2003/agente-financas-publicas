@@ -23,3 +23,7 @@ Thumbs.db
 # Dados brutos/processados
 data/raw/
 data/processed/
+
+# Arquivos de dados muito grandes
+folha_palmas.csv
+pagamentos_palmas.csv
