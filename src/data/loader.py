@@ -1,7 +1,9 @@
 import pandas as pd
+import json
+import requests
 from pathlib import Path
 
-PASTA_DADOS = "C:/Users/kennk/agente-financas-publicas"
+url_base = 'https://acessoainformacao.palmas.to.gov.br'
 
 ARQUIVOS = {
     "contratos": "contratos.csv",
@@ -16,6 +18,11 @@ ARQUIVOS = {
     "relatorio_licitacoes": "relatorio_licitacoes.csv",
     "sancoes_administrativas": "relatorio_sanções_administrativas.csv"
 }
+
+sessao = requests.Session()
+
+
+
 
 def carregar_csvs(pasta_base, arquivos, sep=";"):
     """
