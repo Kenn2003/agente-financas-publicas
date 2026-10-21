@@ -138,8 +138,8 @@ def main():
         print(f"\nIniciando: {nome}")
 
         baixar_base(
-            nome="arrecadacao",
-            endpoint="arrecadacao/",
+            nome=nome,
+            endpoint=endpoint,
             limite_paginas=None
         )
 
