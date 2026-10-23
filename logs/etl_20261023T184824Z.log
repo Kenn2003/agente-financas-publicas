@@ -1,0 +1,8 @@
+2026-10-23 15:48:24,534 INFO Iniciando arrecadacao
+2026-10-23 15:48:25,174 INFO arrecadacao: 3542 linhas processadas
+2026-10-23 15:48:25,175 INFO Iniciando gastos_diretos
+2026-10-23 15:48:43,072 INFO gastos_diretos: 344323 linhas processadas
+2026-10-23 15:48:43,072 INFO Iniciando folha_pagamento
+2026-10-23 15:49:05,233 INFO folha_pagamento: 489378 linhas processadas
+2026-10-23 15:49:05,233 INFO Iniciando receitas_recentes
+2026-10-23 15:49:06,969 INFO receitas_recentes: 103768 linhas processadas
