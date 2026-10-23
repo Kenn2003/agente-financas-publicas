@@ -1,0 +1,148 @@
+{
+  "executado_em": "2026-10-23T19:06:01.631365+00:00",
+  "bases": {
+    "arrecadacao": {
+      "status": "ok",
+      "origem": "C:\\Users\\kennk\\agente-financas-publicas\\data\\raw\\csv\\historico_arrecadacao.csv",
+      "destino": "C:\\Users\\kennk\\agente-financas-publicas\\data\\processed\\arrecadacao.csv",
+      "transformacoes": {
+        "base": "arrecadacao",
+        "linhas_entrada": 3542,
+        "colunas_entrada": 29,
+        "conversoes_invalidas": {
+          "receita_data_ocorrencia": 0,
+          "receita_valor": 0,
+          "valor_mes": 0,
+          "valor_ano": 0,
+          "valor_receita_ano": 0,
+          "valor_receita_mes": 0,
+          "valor_consolidado_mes": 0,
+          "valor_consolidado_ano": 0,
+          "data_atualizacao": 0,
+          "valor_jan": 0,
+          "valor_fev": 0,
+          "valor_mar": 0,
+          "valor_abr": 0,
+          "valor_mai": 0,
+          "valor_jun": 0,
+          "valor_jul": 0,
+          "valor_ago": 0,
+          "valor_set": 0,
+          "valor_out": 0,
+          "valor_nov": 0,
+          "valor_dez": 0
+        }
+      },
+      "qualidade": {
+        "base": "arrecadacao",
+        "linhas": 3542,
+        "colunas": 29,
+        "duplicadas_integralmente": 0,
+        "nulos_por_coluna": {}
+      }
+    },
+    "gastos_diretos": {
+      "status": "ok",
+      "origem": "C:\\Users\\kennk\\agente-financas-publicas\\data\\raw\\csv\\historico_gastos_diretos.csv",
+      "destino": "C:\\Users\\kennk\\agente-financas-publicas\\data\\processed\\gastos_diretos.csv",
+      "transformacoes": {
+        "base": "gastos_diretos",
+        "linhas_entrada": 344323,
+        "colunas_entrada": 48,
+        "conversoes_invalidas": {
+          "data_liquidacao": 1,
+          "data": 0,
+          "data_pagamento": 0,
+          "valor_anulado": 0,
+          "valor_anual_empenhado": 0,
+          "valor_empenho": 0,
+          "valor_pago": 0,
+          "valor_liq": 0,
+          "data_atualizacao": 0
+        }
+      },
+      "qualidade": {
+        "base": "gastos_diretos",
+        "linhas": 344323,
+        "colunas": 38,
+        "duplicadas_integralmente": 0,
+        "nulos_por_coluna": {
+          "data_liquidacao": 19909,
+          "data_pagamento": 65785,
+          "historico": 2055
+        }
+      }
+    },
+    "folha_pagamento": {
+      "status": "ok",
+      "origem": "C:\\Users\\kennk\\agente-financas-publicas\\data\\raw\\csv\\historico_folha_pagamento.csv",
+      "destino": "C:\\Users\\kennk\\agente-financas-publicas\\data\\processed\\folha_pagamento.csv",
+      "transformacoes": {
+        "base": "folha_pagamento",
+        "linhas_entrada": 489378,
+        "colunas_entrada": 31,
+        "conversoes_invalidas": {
+          "data_admissao": 0,
+          "data_desligamento": 0,
+          "vencimento_base": 0,
+          "vencimento_outros": 0,
+          "vencimento_ferias": 0,
+          "desconto_previpalmas": 0,
+          "desconto_irrf": 0,
+          "desconto_outros": 0,
+          "valor_rendimento": 0,
+          "valor_descontos": 0,
+          "valor_rendimento_liquido": 0,
+          "data_atualizacao": 0
+        }
+      },
+      "qualidade": {
+        "base": "folha_pagamento",
+        "linhas": 489378,
+        "colunas": 30,
+        "duplicadas_integralmente": 5018,
+        "nulos_por_coluna": {
+          "cod_setor": 19,
+          "setor": 19,
+          "cod_cargo": 567,
+          "cargo": 567,
+          "cod_funcao": 471033,
+          "funcao": 471033,
+          "cod_secretaria": 186524,
+          "data_desligamento": 442805,
+          "localizacao": 475395,
+          "vencimento_outros": 126,
+          "desconto_outros": 126,
+          "valor_rendimento": 126,
+          "valor_descontos": 126
+        }
+      }
+    },
+    "receitas_recentes": {
+      "status": "ok",
+      "origem": "C:\\Users\\kennk\\agente-financas-publicas\\data\\raw\\csv\\atual_receitas.csv",
+      "destino": "C:\\Users\\kennk\\agente-financas-publicas\\data\\processed\\receitas_recentes.csv",
+      "transformacoes": {
+        "base": "receitas_recentes",
+        "linhas_entrada": 103768,
+        "colunas_entrada": 14,
+        "conversoes_invalidas": {
+          "valor_orcado": 0,
+          "valor_arrecado_mes": 0,
+          "valor_arrecado_periodo": 0
+        }
+      },
+      "qualidade": {
+        "base": "receitas_recentes",
+        "linhas": 103768,
+        "colunas": 12,
+        "duplicadas_integralmente": 0,
+        "nulos_por_coluna": {}
+      }
+    }
+  },
+  "pendencias": [
+    "enriquecimento IBGE (Matheus)",
+    "carga relacional (Karyne)"
+  ]
+}
