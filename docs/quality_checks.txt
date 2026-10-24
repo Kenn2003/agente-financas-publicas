@@ -1,0 +1,281 @@
+RELATÓRIO DE VERIFICAÇÃO DE QUALIDADE DOS DADOS
+Este relatório é apenas diagnóstico.
+Nenhum arquivo Parquet foi alterado.
+
+================================================================================
+DATASET: arrecadacao
+ARQUIVO: C:\Users\Administrator\Desktop\AGENTE FINANÇAS PÚBLICAS\agente-financas-publicas\data\ready\arrecadacao.parquet
+================================================================================
+Registros: 3542
+Colunas: 29
+
+Duplicidades completas: 0
+IDs distintos: 3542
+IDs nulos: 0
+Registros com ID repetido: 0
+
+Colunas com valores nulos:
+  Nenhuma
+
+Colunas numéricas com valores negativos:
+  - receita_valor: 123 registros; mínimo=-49601171.12
+  - valor_ano: 123 registros; mínimo=-49601171.12
+  - valor_receita_ano: 123 registros; mínimo=-49601171.12
+  - valor_consolidado_ano: 123 registros; mínimo=-49601171.12
+  - valor_jan: 108 registros; mínimo=-49601171.12
+  - valor_fev: 109 registros; mínimo=-49601171.12
+  - valor_mar: 110 registros; mínimo=-49601171.12
+  - valor_abr: 113 registros; mínimo=-49601171.12
+  - valor_mai: 117 registros; mínimo=-49601171.12
+  - valor_jun: 137 registros; mínimo=-49601171.12
+  - valor_jul: 156 registros; mínimo=-49601171.12
+  - valor_ago: 120 registros; mínimo=-49601171.12
+  - valor_set: 126 registros; mínimo=-49601171.12
+  - valor_out: 158 registros; mínimo=-49601171.12
+  - valor_nov: 128 registros; mínimo=-49601171.12
+  - valor_dez: 124 registros; mínimo=-49601171.12
+
+Intervalos das colunas de data:
+  - receita_data_ocorrencia: 2010-01-01 00:00:00 até 2018-01-01 00:00:00
+  - data_atualizacao: 2016-05-06 09:20:59.213360 até 2021-06-01 14:45:49.067748
+
+Colunas que exigem cuidado de privacidade:
+  Nenhuma identificada neste dataset
+
+Possíveis caracteres corrompidos:
+  Nenhum padrão suspeito encontrado
+
+Tipos das colunas:
+  - id: str
+  - receita_codigo: str
+  - receita_descricao: str
+  - receita_data_ocorrencia: datetime64[us]
+  - receita_valor: Float64
+  - dia: str
+  - mes: str
+  - ano: str
+  - valor_mes: Float64
+  - valor_ano: Float64
+  - valor_receita_ano: Float64
+  - valor_receita_mes: Float64
+  - valor_consolidado_mes: Float64
+  - valor_consolidado_ano: Float64
+  - codigo_conta_contabil: str
+  - descricao_conta_contabil: str
+  - data_atualizacao: datetime64[us]
+  - valor_jan: Float64
+  - valor_fev: Float64
+  - valor_mar: Float64
+  - valor_abr: Float64
+  - valor_mai: Float64
+  - valor_jun: Float64
+  - valor_jul: Float64
+  - valor_ago: Float64
+  - valor_set: Float64
+  - valor_out: Float64
+  - valor_nov: Float64
+  - valor_dez: Float64
+
+================================================================================
+DATASET: folha_pagamento
+ARQUIVO: C:\Users\Administrator\Desktop\AGENTE FINANÇAS PÚBLICAS\agente-financas-publicas\data\ready\folha_pagamento.parquet
+================================================================================
+Registros: 489378
+Colunas: 30
+
+Duplicidades completas: 5018
+IDs distintos: 484360
+IDs nulos: 0
+Registros com ID repetido: 8150
+Exemplos de IDs repetidos:
+  - 1221775: 6 ocorrências
+  - 1221778: 6 ocorrências
+  - 1221772: 6 ocorrências
+  - 1221776: 6 ocorrências
+  - 1221779: 6 ocorrências
+  - 1221561: 6 ocorrências
+  - 1221562: 6 ocorrências
+  - 1221564: 6 ocorrências
+  - 1221565: 6 ocorrências
+  - 1221568: 6 ocorrências
+
+Colunas com valores nulos:
+  - localizacao: 475395 (97.14%)
+  - funcao: 471033 (96.25%)
+  - cod_funcao: 471033 (96.25%)
+  - data_desligamento: 442805 (90.48%)
+  - cod_secretaria: 186524 (38.11%)
+  - cod_cargo: 567 (0.12%)
+  - cargo: 567 (0.12%)
+  - vencimento_outros: 126 (0.03%)
+  - desconto_outros: 126 (0.03%)
+  - valor_rendimento: 126 (0.03%)
+  - valor_descontos: 126 (0.03%)
+  - setor: 19 (0.00%)
+  - cod_setor: 19 (0.00%)
+
+Colunas numéricas com valores negativos:
+  - vencimento_outros: 1744 registros; mínimo=-88205.88
+  - desconto_outros: 9372 registros; mínimo=-2990.02
+
+Intervalos das colunas de data:
+  - data_admissao: 1989-07-01 00:00:00 até 2021-07-30 00:00:00
+  - data_desligamento: 2009-04-30 00:00:00 até 2021-09-20 00:00:00
+  - data_atualizacao: 2016-03-30 13:01:34.333028 até 2021-09-22 18:56:16.063731
+
+Colunas que exigem cuidado de privacidade:
+  - servidor
+  - matricula
+  - data_admissao
+  - data_desligamento
+  - localizacao
+
+Possíveis caracteres corrompidos:
+  Nenhum padrão suspeito encontrado
+
+Tipos das colunas:
+  - id: str
+  - matricula: str
+  - servidor: str
+  - cod_setor: str
+  - setor: str
+  - cod_cargo: str
+  - cargo: str
+  - cod_funcao: str
+  - cod_vinculo: str
+  - vinculo: str
+  - funcao: str
+  - cod_secretaria: str
+  - secretaria: str
+  - data_admissao: datetime64[us]
+  - data_desligamento: datetime64[us]
+  - localizacao: str
+  - vencimento_base: Float64
+  - vencimento_outros: Float64
+  - vencimento_ferias: Float64
+  - desconto_previpalmas: Float64
+  - desconto_irrf: Float64
+  - desconto_outros: Float64
+  - valor_rendimento: Float64
+  - valor_descontos: Float64
+  - valor_rendimento_liquido: Float64
+  - ativo: str
+  - admitido_exonerado: str
+  - mes_referencia: str
+  - ano_referencia: str
+  - data_atualizacao: datetime64[us]
+
+================================================================================
+DATASET: gastos_diretos
+ARQUIVO: C:\Users\Administrator\Desktop\AGENTE FINANÇAS PÚBLICAS\agente-financas-publicas\data\ready\gastos_diretos.parquet
+================================================================================
+Registros: 344323
+Colunas: 38
+
+Duplicidades completas: 0
+IDs distintos: 344323
+IDs nulos: 0
+Registros com ID repetido: 0
+
+Colunas com valores nulos:
+  - data_pagamento: 65785 (19.11%)
+  - data_liquidacao: 19908 (5.78%)
+  - historico: 2055 (0.60%)
+
+Colunas numéricas com valores negativos:
+  - valor_empenho: 9830 registros; mínimo=-5141862.3
+  - valor_pago: 1 registros; mínimo=-5676.0
+  - valor_liq: 3666 registros; mínimo=-1059136.28
+
+Intervalos das colunas de data:
+  - data_liquidacao: 0001-01-01 00:00:00 até 2021-06-01 00:00:00
+  - data: 2001-07-02 00:00:00 até 2021-06-01 00:00:00
+  - data_pagamento: 2002-02-20 00:00:00 até 2021-05-31 00:00:00
+  - data_atualizacao: 2021-06-01 14:46:01.692814 até 2021-06-01 14:59:44.616867
+
+Colunas que exigem cuidado de privacidade:
+  - cpf_cnpj
+  - fornecedor
+
+Possíveis caracteres corrompidos:
+  Nenhum padrão suspeito encontrado
+
+Tipos das colunas:
+  - id: str
+  - processo: str
+  - ficha: str
+  - cod_unidade: str
+  - unidade: str
+  - cod_funcao: str
+  - funcao: str
+  - cod_sub_funcao: str
+  - sub_funcao: str
+  - cod_programa: str
+  - programa: str
+  - cod_proj_ativ: str
+  - proj_ativ: str
+  - cod_natureza: str
+  - natureza: str
+  - cod_subnatureza: str
+  - subnatureza: str
+  - fornecedor: str
+  - cod_fonte: str
+  - fonte: str
+  - empenho: str
+  - liquidacao: str
+  - data_liquidacao: datetime64[us]
+  - cpf_cnpj: str
+  - data: datetime64[us]
+  - data_pagamento: datetime64[us]
+  - numero_pagamento: str
+  - valor_anulado: Float64
+  - valor_anual_empenhado: Float64
+  - valor_empenho: Float64
+  - valor_pago: Float64
+  - valor_liq: Float64
+  - data_atualizacao: datetime64[us]
+  - ano_referencia: str
+  - mes_referencia: str
+  - diaria: str
+  - historico: str
+  - cotacao: str
+
+================================================================================
+DATASET: receitas_recentes
+ARQUIVO: C:\Users\Administrator\Desktop\AGENTE FINANÇAS PÚBLICAS\agente-financas-publicas\data\ready\receitas_recentes.parquet
+================================================================================
+Registros: 103768
+Colunas: 12
+
+Duplicidades completas: 0
+
+Colunas com valores nulos:
+  Nenhuma
+
+Colunas numéricas com valores negativos:
+  - valor_orcado: 338 registros; mínimo=-101537873
+  - valor_arrecado_mes: 1878 registros; mínimo=-37459357.92
+  - valor_arrecado_periodo: 1878 registros; mínimo=-37459357.92
+
+Intervalos das colunas de data:
+  Nenhuma coluna datetime identificada
+
+Colunas que exigem cuidado de privacidade:
+  Nenhuma identificada neste dataset
+
+Possíveis caracteres corrompidos:
+  Nenhum padrão suspeito encontrado
+
+Tipos das colunas:
+  - total: str
+  - orgao_nome: str
+  - codigo: str
+  - orgao: str
+  - ano: str
+  - mes: str
+  - descricao: str
+  - valor_orcado: Int64
+  - valor_arrecado_mes: Float64
+  - valor_arrecado_periodo: Float64
+  - covid: str
+  - codigo_original: str
