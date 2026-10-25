@@ -1,430 +1,678 @@
-\# Inventário dos Dados para o Banco
+# Inventário dos Dados e Validação do Banco
+
+## 1. Objetivo
+
+Este documento registra as estruturas, quantidades, tipos de dados, valores
+nulos, duplicidades, tratamentos realizados, informações que exigem proteção,
+resultados de validação e limitações dos dados utilizados no projeto.
+
+O inventário considera:
+
+- os arquivos Parquet produzidos pelo pipeline ETL;
+- o carregamento realizado no PostgreSQL;
+- as validações executadas após a carga;
+- as limitações dos dados em relação ao problema de inadimplência e dívida ativa.
+
+Os arquivos Parquet analisados estão localizados em:
 
 
 
-\## 1. Objetivo
+
+data/ready/
 
 
 
-Este documento registra as estruturas, tipos, nulos, duplicidades,
 
-informações sensíveis e possíveis problemas de qualidade dos arquivos
-
-Parquet produzidos pelo pipeline ETL.
+O banco utilizado é:
 
 
 
-Os arquivos analisados estão localizados em `data/ready/`.
+PostgreSQL
+Banco: agente_financas_publicas
+Porta: 5432
 
 
 
-\## 2. Arquivos analisados
 
+---
 
+## 2. Arquivos de origem
 
-| Arquivo | Registros | Colunas | Duplicidades completas |
+As quantidades desta seção correspondem aos arquivos Parquet antes da carga
+definitiva no banco.
 
+| Arquivo | Registros de origem | Colunas | Duplicidades completas |
 |---|---:|---:|---:|
+| `arrecadacao.parquet` | 3.542 | 29 | 0 |
+| `folha_pagamento.parquet` | 489.378 | 30 | 5.018 |
+| `gastos_diretos.parquet` | 344.323 | 38 | 0 |
+| `receitas_recentes.parquet` | 103.768 | 12 | 0 |
 
-| arrecadacao.parquet | 3.542 | 29 | 0 |
+As duplicidades informadas são duplicidades integrais, ou seja, registros com
+todos os campos iguais.
 
-| folha\_pagamento.parquet | 489.378 | 30 | 5.018 |
+---
 
-| gastos\_diretos.parquet | 344.323 | 38 | 0 |
+## 3. Tabelas implementadas
 
-| receitas\_recentes.parquet | 103.768 | 12 | 0 |
+O banco PostgreSQL contém as seguintes tabelas principais:
 
+| Tabela | Finalidade |
+|---|---|
+| `arrecadacao` | Armazenar dados históricos de arrecadação municipal |
+| `folha_pagamento` | Armazenar dados de folha de pagamento |
+| `gastos_diretos` | Armazenar dados de empenho, liquidação e pagamento |
+| `receitas_recentes` | Armazenar dados recentes de receitas municipais |
+| `carga_dados` | Registrar e auditar as cargas realizadas |
 
+Os principais arquivos responsáveis pela camada de banco são:
 
-\## 3. Arrecadação
 
 
+database/schema.sql
+database/queries.sql
+src/database/load_parquets.py
+src/database/repository.py
 
-Arquivo: `data/ready/arrecadacao.parquet`
 
 
 
-\### Características
+---
 
+## 4. Registros carregados no PostgreSQL
 
+Após o processo de carga e os tratamentos definidos, foram registrados os
+seguintes quantitativos:
 
-\- 3.542 registros;
+| Tabela | Registros carregados |
+|---|---:|
+| `arrecadacao` | 3.542 |
+| `folha_pagamento` | 484.360 |
+| `gastos_diretos` | 344.323 |
+| `receitas_recentes` | 103.768 |
+| `carga_dados` | 4 registros de auditoria |
 
-\- 29 colunas;
+A tabela `carga_dados` registrou quatro cargas com sucesso:
 
-\- nenhuma coluna com valores nulos;
+| Arquivo | Tabela de destino | Registros | Sucesso |
+|---|---|---:|---|
+| `arrecadacao.parquet` | `arrecadacao` | 3.542 | Sim |
+| `folha_pagamento.parquet` | `folha_pagamento` | 484.360 | Sim |
+| `gastos_diretos.parquet` | `gastos_diretos` | 344.323 | Sim |
+| `receitas_recentes.parquet` | `receitas_recentes` | 103.768 | Sim |
 
-\- nenhum registro totalmente duplicado;
+A folha de pagamento possuía 489.378 registros no arquivo de origem.
+Foram identificadas 5.018 duplicidades integrais e carregados 484.360
+registros no banco.
 
-\- período observado: 2010 a 2018, conforme diagnóstico;
+O arquivo Parquet original não foi alterado.
 
-\- contém códigos e descrições de receitas;
+---
 
-\- contém valores mensais e anuais;
+## 5. Arrecadação
 
-\- contém informações de atualização dos dados.
+Arquivo de origem:
 
 
 
-\### Possíveis chaves
 
+data/ready/arrecadacao.parquet
 
 
-O campo `id` possui 3.542 valores distintos no diagnóstico e pode ser
 
-candidato a identificador técnico. A confirmação como chave primária
 
-deverá ocorrer durante a carga no banco.
+### 5.1 Características
 
+- 3.542 registros;
+- 29 colunas;
+- nenhuma coluna com valores nulos no diagnóstico inicial;
+- nenhum registro totalmente duplicado;
+- período observado entre 2010 e 2018;
+- presença de códigos e descrições de receitas;
+- presença de valores mensais e anuais;
+- presença de informações de atualização dos dados.
 
+### 5.2 Identificador
 
-\### Observações
+O campo `id` apresentou 3.542 valores distintos no arquivo analisado.
 
+Na tabela carregada, não foram encontrados IDs duplicados na verificação
+realizada.
 
+Esse campo é utilizado como identificador técnico no modelo atual. A
+interpretação definitiva como chave de negócio depende da documentação da
+fonte original.
 
-\- `dia`, `mes` e `ano` estão armazenados como texto;
+### 5.3 Observações
 
-\- existem valores financeiros negativos;
+- Os campos `dia`, `mes` e `ano` estão armazenados como texto.
+- Existem valores financeiros negativos.
+- Os valores negativos não foram removidos automaticamente.
+- Os campos mensais podem representar valores derivados, acumulados ou
+  lançamentos individuais.
+- A interpretação contábil dos valores deve ser validada com a documentação
+  oficial da fonte.
 
-\- há possíveis problemas de codificação de caracteres nas descrições;
+---
 
-\- os campos mensais podem representar valores derivados ou acumulados e
+## 6. Folha de pagamento
 
-&#x20; precisam ser compreendidos antes de consultas analíticas.
+Arquivo de origem:
 
 
 
-\## 4. Folha de pagamento
 
+data/ready/folha_pagamento.parquet
 
 
-Arquivo: `data/ready/folha\_pagamento.parquet`
 
 
+### 6.1 Características
 
-\### Características
+- 489.378 registros no arquivo de origem;
+- 30 colunas;
+- 5.018 duplicidades integrais;
+- 484.360 registros carregados no banco;
+- presença de valores nulos em campos funcionais, secretariais e financeiros;
+- presença de nomes de servidores e matrículas;
+- presença de informações remuneratórias;
+- presença de datas de admissão e desligamento.
 
+### 6.2 Tratamento das duplicidades
 
+As duplicidades integrais foram removidas durante a carga no banco, conforme
+a regra definida no processo de carregamento.
 
-\- 489.378 registros;
+O arquivo Parquet original foi preservado sem alterações.
 
-\- 30 colunas;
+A diferença observada foi:
 
-\- 5.018 registros totalmente duplicados;
 
-\- possui valores nulos em campos funcionais, secretariais e financeiros;
 
-\- possui nomes de servidores e matrículas;
 
-\- possui informações remuneratórias;
+489.378 registros de origem
+- 5.018 duplicidades integrais
+= 484.360 registros carregados
 
-\- possui datas de admissão e desligamento.
 
 
 
-\### Dados que exigem proteção
+### 6.3 Dados que exigem proteção
 
+Os seguintes campos podem conter dados pessoais ou informações que exigem
+controle de acesso e minimização:
 
+- `servidor`;
+- `matricula`;
+- `data_admissao`;
+- `data_desligamento`;
+- `localizacao`;
+- valores de remuneração;
+- informações de vínculo;
+- informações de função.
 
-\- `servidor`;
+A interface pública do MVP não deve exibir nomes, matrículas ou outros dados
+pessoais individualizados sem justificativa documentada.
 
-\- `matricula`;
+Os dados pessoais não devem ser publicados no repositório Git.
 
-\- `data\_admissao`;
+---
 
-\- `data\_desligamento`;
+## 7. Gastos diretos
 
-\- `localizacao`;
+Arquivo de origem:
 
-\- valores de remuneração;
 
-\- informações de vínculo e função.
 
+data/ready/gastos_diretos.parquet
 
 
-\### Decisão provisória
 
 
+### 7.1 Características
 
-A exclusão dos registros duplicados ainda não foi realizada. É necessário
+- 344.323 registros;
+- 38 colunas;
+- nenhum registro totalmente duplicado;
+- presença de valores nulos em `data_liquidacao`;
+- presença de valores nulos em `data_pagamento`;
+- presença de valores nulos em `historico`;
+- informações de empenho, liquidação e pagamento;
+- presença de fornecedor e CPF/CNPJ;
+- presença de valores financeiros e datas de execução.
 
-verificar se eles são duplicidades reais ou registros legítimos repetidos
+### 7.2 Tratamento das datas
 
-em diferentes períodos de referência.
+Durante a carga, valores sentinela correspondentes à data:
 
 
 
-A interface pública do MVP não deverá exibir nomes, matrículas ou outros
+0001-01-01
 
-dados pessoais individualizados sem justificativa documentada.
 
 
 
-\## 5. Gastos diretos
+foram convertidos para `NULL` no campo `data_liquidacao`.
 
+Validação realizada:
 
 
-Arquivo: `data/ready/gastos\_diretos.parquet`
 
+datas_sentinela = 0
 
 
-\### Características
 
 
+Após o tratamento, foram encontrados:
 
-\- 344.323 registros;
 
-\- 38 colunas;
 
-\- nenhum registro totalmente duplicado;
+data_liquidacao IS NULL = 19.909 registros
 
-\- nulos em `data\_liquidacao`, `data\_pagamento` e `historico`;
 
-\- contém informações de empenho, liquidação e pagamento;
 
-\- contém fornecedor e CPF/CNPJ;
 
-\- contém valores financeiros e datas de execução.
+Esses valores nulos devem ser interpretados como ausência de uma data de
+liquidação válida ou como informação não registrada. Eles não devem ser
+interpretados como datas reais.
 
+### 7.3 Dados que exigem proteção ou minimização
 
+Os seguintes campos exigem atenção:
 
-\### Dados que exigem proteção ou minimização
+- `cpf_cnpj`;
+- `fornecedor`, quando associado a pessoa física;
+- informações que permitam a identificação direta ou indireta de pessoas.
 
+O campo `cpf_cnpj` não deve ser exibido na interface do MVP.
 
+Para análises agregadas, o identificador deve ser removido ou substituído por
+uma representação pseudonimizada, somente quando houver necessidade
+justificada.
 
-\- `cpf\_cnpj`;
+---
 
-\- `fornecedor`, quando associado a pessoa física;
+## 8. Receitas recentes
 
-\- informações que possam permitir identificação direta de pessoas.
+Arquivo de origem:
 
 
 
-\### Decisão provisória
+data/ready/receitas_recentes.parquet
 
 
 
-O campo `cpf\_cnpj` não deverá ser exibido na interface do MVP.
 
-Para análises agregadas, deverá ser substituído por identificador
+### 8.1 Características
 
-pseudonimizado ou removido quando não for necessário.
+- 103.768 registros;
+- 12 colunas;
+- nenhuma coluna com valores nulos no diagnóstico inicial;
+- nenhum registro totalmente duplicado;
+- dados organizados por órgão, código, ano e mês;
+- presença de valores orçados e arrecadados;
+- período observado entre 2019 e 2024.
 
+### 8.2 Observações
 
+- Os campos `ano`, `mes`, `total`, `orgao` e `covid` estão armazenados como
+  texto.
+- O campo `valor_orcado` está representado como inteiro.
+- Existem valores negativos em campos financeiros.
+- Os valores negativos não foram removidos automaticamente.
+- A interpretação desses valores deve ser validada com a fonte original ou
+  com a documentação do processo ETL.
 
-\## 6. Receitas recentes
+---
 
+## 9. Problemas e decisões de qualidade
 
+### 9.1 Codificação de caracteres
 
-Arquivo: `data/ready/receitas\_recentes.parquet`
+Inicialmente, alguns caracteres acentuados foram exibidos incorretamente no
+terminal `psql`, por exemplo:
 
 
 
-\### Características
 
+IPTU - PR�PRIO
 
 
-\- 103.768 registros;
 
-\- 12 colunas;
 
-\- nenhuma coluna com valores nulos;
+A investigação confirmou que os dados não estavam corrompidos.
 
-\- nenhum registro totalmente duplicado;
+Foram realizadas as seguintes verificações:
 
-\- dados organizados por órgão, código, ano e mês;
+- o arquivo Parquet contém corretamente o texto `IPTU - PRÓPRIO`;
+- o servidor PostgreSQL utiliza `server_encoding = UTF8`;
+- os dados armazenados no PostgreSQL estão em UTF-8;
+- o cliente `psql` estava utilizando `client_encoding = WIN1252`;
+- após configurar o cliente para UTF-8, os caracteres passaram a ser
+  exibidos corretamente.
 
-\- contém valores orçados e arrecadados;
+A correção utilizada no PowerShell foi:
 
-\- possui dados entre 2019 e 2024, conforme diagnóstico.
 
 
+$env:PGCLIENTENCODING = "UTF8"
 
-\### Observações
 
 
 
-\- `ano`, `mes`, `total`, `orgao` e `covid` estão armazenados como texto;
+Não foi necessária a recarga dos dados nem a correção manual dos textos.
 
-\- `valor\_orcado` está representado como inteiro;
+### 9.2 Valores negativos
 
-\- há valores negativos em valores orçados e arrecadados;
+Foram identificados valores negativos em campos financeiros de algumas
+fontes.
 
-\- a interpretação dos valores negativos deve ser validada com a fonte
+Esses valores podem representar:
 
-&#x20; original ou com a documentação do ETL.
+- estornos;
+- anulações;
+- cancelamentos;
+- ajustes contábeis;
+- devoluções;
+- inconsistências na origem.
 
+Nenhum valor negativo foi removido automaticamente. A remoção ou
+transformação desses valores somente deve ocorrer após a compreensão da
+regra contábil da fonte.
 
+### 9.3 Padronização textual
 
-\## 7. Problemas de qualidade identificados
+Foram observadas variações na grafia de nomes de secretarias, incluindo
+diferenças de:
 
+- acentuação;
+- abreviação;
+- espaçamento;
+- nomenclatura histórica;
+- uso de caracteres especiais.
 
+Exemplos de variações podem incluir nomes com e sem acentos ou alterações
+na denominação da secretaria ao longo do tempo.
 
-\### 7.1 Codificação de caracteres
+Essas diferenças não foram alteradas na camada bruta.
 
+Caso seja necessária uma padronização para análise, ela deve ser realizada em
+uma camada analítica ou em uma coluna derivada, preservando os valores
+originais.
 
+### 9.4 Tipos armazenados como texto
 
-Foram observados textos corrompidos, por exemplo:
+Alguns campos temporais ou categóricos estão armazenados como texto, como
+`ano`, `mes`, `dia` e `orgao`.
 
+A conversão para tipos numéricos ou datas deve ser realizada somente após:
 
+1. verificar se todos os valores possuem formato válido;
+2. identificar valores ausentes ou inconsistentes;
+3. documentar a transformação;
+4. manter os dados originais preservados.
 
-\- `PR╙PRIO`;
+---
 
-\- `HABITA╟├O`;
+## 10. Validações realizadas
 
-\- `EDUCA╟├O`;
+Foram executadas as seguintes validações:
 
-\- `TRANSFER╩NCIAS`.
+- contagens das tabelas conferidas;
+- quatro cargas registradas na tabela `carga_dados`;
+- quatro cargas registradas com `sucesso = true`;
+- duplicidades integrais da folha tratadas durante a carga;
+- IDs duplicados não encontrados nas tabelas principais verificadas;
+- datas sentinela não encontradas após o tratamento;
+- consulta de registros com `data_liquidacao IS NULL`;
+- execução das consultas de agregação;
+- teste do repositório Python;
+- validação das funções de consulta do repositório;
+- confirmação da leitura correta dos caracteres em UTF-8.
 
+### 10.1 Resultado resumido
 
+| Verificação | Resultado |
+|---|---|
+| Registros em `arrecadacao` | 3.542 |
+| Registros em `folha_pagamento` | 484.360 |
+| Registros em `gastos_diretos` | 344.323 |
+| Registros em `receitas_recentes` | 103.768 |
+| Registros em `carga_dados` | 4 |
+| Cargas com sucesso | 4 |
+| IDs duplicados nas tabelas verificadas | 0 |
+| Datas sentinela em `gastos_diretos` | 0 |
+| Datas nulas em `data_liquidacao` | 19.909 |
+| Exibição UTF-8 | Corrigida |
 
-Não será feita correção manual antes de identificar a origem do problema.
+---
 
-A codificação deve ser verificada na etapa de leitura, transformação ou
+## 11. Limitações para o projeto de inadimplência
 
-exportação dos dados.
+As bases atualmente carregadas contêm dados de:
 
+- arrecadação;
+- folha de pagamento;
+- gastos diretos;
+- receitas recentes.
 
+Entretanto, os dados disponíveis não apresentam, de forma confirmada, campos
+individualizados suficientes de:
 
-\### 7.2 Valores negativos
+- dívida ativa;
+- contribuinte tributário;
+- situação de pagamento;
+- data de vencimento;
+- data de quitação;
+- inadimplência;
+- recuperabilidade;
+- beneficiário do IPTU Social;
+- vínculo individual entre contribuinte, imóvel e débito.
 
+Consequentemente, não é possível afirmar que os dados atuais sejam
+suficientes para treinar um modelo supervisionado definitivo de predição
+individual de inadimplência ou de recuperabilidade da dívida ativa.
 
+As tabelas atuais podem apoiar:
 
-Existem valores negativos em campos financeiros. Eles podem representar,
+- análise exploratória de arrecadação;
+- análise histórica de receitas;
+- análise agregada de gastos;
+- análise agregada da folha;
+- construção de indicadores financeiros;
+- protótipos metodológicos;
+- estudos com dados simulados ou agregados.
 
-por exemplo, estornos, anulações, ajustes contábeis ou inconsistências.
+Até que novas fontes oficiais sejam confirmadas, o projeto poderá:
 
+1. obter uma fonte oficial adicional com dados tributários adequados;
+2. redefinir o problema para análise ou previsão de arrecadação agregada;
+3. utilizar dados simulados para demonstrar a metodologia;
+4. desenvolver um score demonstrativo, deixando explícito que ele não
+   representa uma decisão fiscal real.
 
+Não se deve afirmar que o modelo definitivo de inadimplência está pronto
+sem uma variável-alvo validada, dados adequados e avaliação experimental.
 
-Nenhum valor negativo será removido automaticamente.
+---
 
+## 12. Diretrizes de privacidade e segurança
 
+O banco e o MVP devem aplicar os princípios de minimização, finalidade,
+necessidade, segurança e transparência.
 
-\### 7.3 Datas
+Não devem ser publicados no repositório Git:
 
+- CPF;
+- CNPJ quando permitir identificação indevida;
+- nomes de servidores;
+- matrículas;
+- endereços individualizados;
+- dados pessoais não anonimizados;
+- arquivos Parquet com informações pessoais;
+- dumps do banco;
+- credenciais;
+- arquivos `.env`.
 
+O arquivo `.env` deve permanecer fora do versionamento.
 
-Há datas muito antigas e datas de atualização posteriores ao período
+A interface do MVP deve priorizar:
 
-de referência dos registros. Esses campos devem ser diferenciados no
+- dados agregados;
+- identificadores pseudonimizados;
+- regiões amplas;
+- indicadores estatísticos;
+- valores agrupados;
+- ausência de exposição individualizada desnecessária.
 
-modelo:
+O score produzido por eventual modelo deve ser tratado como instrumento de
+apoio à análise, e não como:
 
+- prova de fraude;
+- prova de irregularidade;
+- decisão automática de cobrança;
+- justificativa única para sanção;
+- substituto da análise humana;
+- mecanismo de discriminação de grupos vulneráveis.
 
+---
 
-\- data do fato ou evento;
+## 13. Artefatos implementados
 
-\- período de referência;
+A camada de banco possui os seguintes artefatos:
 
-\- data de atualização da fonte.
 
 
+database/schema.sql
+database/queries.sql
+src/database/load_parquets.py
+src/database/repository.py
 
-\### 7.4 Duplicidades na folha
 
 
 
-Os 5.018 registros duplicados da folha precisam ser investigados antes
+Também foram disponibilizados scripts auxiliares de inspeção e validação
+dentro de `src/database/`.
 
-da definição da carga definitiva.
+A documentação relacionada ao banco inclui:
 
 
 
-\## 8. Limitações para o projeto de inadimplência
+docs/database_inventario.md
+docs/sprint_02/arquitetura-dados.md
 
 
 
-Os arquivos analisados não apresentam, de forma confirmada, campos
 
-individualizados de:
+---
 
+## 14. Execução básica
 
+### 14.1 Criar o schema
 
-\- dívida ativa;
+A execução do schema deve ser realizada no banco configurado pela equipe:
 
-\- contribuinte tributário;
 
-\- situação de pagamento;
 
-\- data de vencimento;
+psql -U postgres -d agente_financas_publicas -f database/schema.sql
 
-\- data de quitação;
 
-\- inadimplência;
 
-\- recuperabilidade;
 
-\- beneficiário do IPTU Social.
+### 14.2 Executar a carga
 
+O carregador deve ser executado conforme as instruções presentes no código
+e utilizando as variáveis de ambiente configuradas.
 
+Os arquivos de dados devem permanecer em diretórios locais e não devem ser
+publicados quando contiverem dados pessoais ou sensíveis.
 
-Consequentemente, ainda não é possível afirmar que os dados disponíveis
+### 14.3 Executar as consultas
 
-sejam suficientes para treinar um modelo supervisionado de predição de
 
-inadimplência.
 
+psql -U postgres -d agente_financas_publicas -f database/queries.sql
 
 
-Até que novas fontes sejam confirmadas, o projeto poderá precisar:
 
 
+Para exibir corretamente caracteres acentuados no PowerShell:
 
-1\. obter uma fonte oficial adicional com dados tributários adequados; ou
 
-2\. redefinir o problema para análise e previsão de arrecadação agregada;
 
-3\. utilizar um protótipo demonstrativo com dados simulados, deixando isso
 
-&#x20;  explicitamente documentado.
+$env:PGCLIENTENCODING = "UTF8"
 
 
 
-\## 9. Diretriz de privacidade
 
+### 14.4 Testar o repositório Python
 
+A conexão Python depende das variáveis de ambiente configuradas no arquivo
+`.env`, que não deve ser enviado ao GitHub.
 
-O banco deverá aplicar minimização de dados. Dados pessoais identificáveis
+Exemplo de teste:
 
-não deverão ser armazenados ou exibidos quando não forem necessários para
 
-o objetivo acadêmico.
 
+py -c "from src.database.repository import listar_cargas; print(listar_cargas())"
 
 
-CPF, CNPJ, nomes, matrículas e identificadores equivalentes não deverão
 
-ser publicados no repositório Git.
 
+---
 
+## 15. Situação atual
 
-\## 10. Situação atual
+- [x] Arquivos Parquet localizados;
+- [x] Quantidade de registros identificada;
+- [x] Colunas e tipos identificados;
+- [x] Valores nulos identificados;
+- [x] Duplicidades identificadas;
+- [x] Duplicidades integrais da folha tratadas durante a carga;
+- [x] Arquivo Parquet original preservado;
+- [x] Schema SQL implementado;
+- [x] Banco PostgreSQL configurado;
+- [x] Dados carregados;
+- [x] Auditoria de cargas implementada;
+- [x] Consultas SQL criadas;
+- [x] Repositório Python implementado;
+- [x] Persistência testada;
+- [x] Contagens finais validadas;
+- [x] IDs duplicados verificados nas tabelas principais;
+- [x] Datas sentinela verificadas;
+- [x] Tratamento de datas inválidas realizado;
+- [x] Codificação investigada;
+- [x] Exibição UTF-8 corrigida;
+- [x] Limitações dos dados documentadas;
+- [ ] Investigar semanticamente os valores negativos;
+- [ ] Definir eventual padronização analítica dos nomes de secretarias;
+- [ ] Confirmar se o diagrama representa exatamente o schema atual;
+- [ ] Alinhar com a equipe o padrão definitivo dos diretórios de dados;
+- [ ] Confirmar a disponibilidade de dados adequados para a variável-alvo de
+  inadimplência.
 
+---
 
+## 16. Conclusão
 
-\- \[x] Arquivos Parquet localizados;
+A camada de banco de dados foi implementada, carregada, testada e
+documentada.
 
-\- \[x] Quantidade de registros identificada;
+O banco PostgreSQL contém dados estruturados de arrecadação, folha de
+pagamento, gastos diretos e receitas recentes. As quatro cargas foram
+registradas com sucesso e as principais validações foram executadas.
 
-\- \[x] Colunas e tipos identificados;
+A investigação de codificação confirmou que os dados acentuados estão
+armazenados corretamente em UTF-8. A exibição incorreta ocorreu por uma
+configuração incompatível do cliente `psql` e foi corrigida sem necessidade
+de recarga.
 
-\- \[x] Nulos identificados;
+Apesar de os dados serem adequados para análises financeiras e
+exploratórias, as bases atualmente disponíveis não comprovam a existência de
+informações individuais suficientes para treinar um modelo definitivo de
+inadimplência ou de recuperabilidade da dívida ativa.
 
-\- \[x] Duplicidades identificadas;
-
-\- \[ ] Investigar codificação dos textos;
-
-\- \[ ] Investigar valores negativos;
-
-\- \[ ] Investigar duplicidades da folha;
-
-\- \[ ] Validar possíveis chaves primárias;
-
-\- \[ ] Definir schema SQL;
-
-\- \[ ] Implementar carga no banco;
-
-\- \[ ] Criar consultas SQL;
-
-\- \[ ] Testar persistência.
-
+Qualquer etapa posterior de Machine Learning deve utilizar uma variável-alvo
+validada, respeitar as limitações dos dados, proteger informações pessoais,
+evitar decisões automáticas e manter supervisão humana.
