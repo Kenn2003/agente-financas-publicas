@@ -1,0 +1,57 @@
+VERIFICAÇÃO FINAL DE CHAVES
+Nenhum arquivo Parquet foi alterado.
+
+================================================================================
+FOLHA DE PAGAMENTO
+================================================================================
+Registros originais: 489378
+Registros após remoção de cópias exatas: 484360
+Linhas removidas: 5018
+
+Unicidade do id após deduplicação
+Colunas: ['id']
+Registros: 484360
+Combinações distintas: 484360
+Registros em combinações repetidas: 0
+É única: SIM
+
+Unicidade de matrícula e período
+Colunas: ['matricula', 'ano_referencia', 'mes_referencia']
+Registros: 484360
+Combinações distintas: 484360
+Registros em combinações repetidas: 0
+É única: SIM
+
+================================================================================
+GASTOS DIRETOS
+================================================================================
+Unicidade do id de gastos
+Colunas: ['id']
+Registros: 344323
+Combinações distintas: 344323
+Registros em combinações repetidas: 0
+É única: SIM
+
+Unicidade da chave operacional de gastos
+Colunas: ['processo', 'empenho', 'liquidacao']
+Registros: 344323
+Combinações distintas: 325416
+Registros em combinações repetidas: 32168
+É única: NÃO
+
+================================================================================
+RECEITAS RECENTES
+================================================================================
+Chave ampliada com codigo_original
+Colunas: ['ano', 'mes', 'codigo', 'orgao', 'codigo_original']
+Registros: 103768
+Combinações distintas: 103768
+Registros em combinações repetidas: 0
+É única: SIM
+
+Chave ampliada com codigo_original e descricao
+Colunas: ['ano', 'mes', 'codigo', 'orgao', 'codigo_original', 'descricao']
+Registros: 103768
+Combinações distintas: 103768
+Registros em combinações repetidas: 0
+É única: SIM
