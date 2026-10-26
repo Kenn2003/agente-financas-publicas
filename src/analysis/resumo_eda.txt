@@ -1,0 +1,29 @@
+
+EDA - DIVIDA ATIVA DE PALMAS
+
+Arquivo analisado: relatorio_divida_ativa.csv
+Registros tratados: 38557
+Duplicatas removidas: 39
+
+Valor total: R$ 253,581,827.23
+Media: R$ 6,576.80
+Mediana: R$ 560.94
+Maior valor: R$ 31,017,154.05
+
+LEITURAS
+
+1. Mes com mais inscricoes:
+2026-02 - 19104 registros.
+
+2. Mes com maior valor total:
+2026-02 - R$ 216,717,825.45.
+
+3. Dividas acima de R$ 100 mil:
+0.22% dos registros concentram
+79.09% do valor total.
+
+4. Distribuicao:
+A media e maior que a mediana, indicando presenca de valores muito altos.
+
+5. Relacao entre tempo e valor:
+Correlacao de Spearman = 0.238.
