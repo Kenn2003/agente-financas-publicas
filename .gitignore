@@ -27,3 +27,10 @@ data/processed/
 # Arquivos de dados muito grandes
 folha_palmas.csv
 pagamentos_palmas.csv
+
+logs/*.log
+logs/*.json
+.env
+data/raw/
+data/processed/
+data/ready/

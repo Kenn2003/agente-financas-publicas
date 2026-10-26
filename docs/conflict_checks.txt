@@ -1,0 +1,102 @@
+ANÁLISE DE CONFLITOS EM CHAVES REPETIDAS
+Nenhum arquivo Parquet foi alterado.
+
+================================================================================
+FOLHA — id e período
+Chave analisada: ['id', 'ano_referencia', 'mes_referencia']
+================================================================================
+Registros em grupos repetidos: 8150
+Quantidade de grupos repetidos: 3132
+Grupos com registros totalmente iguais: 3132
+Grupos com diferenças: 0
+
+Não foram encontrados exemplos de grupos com diferenças.
+
+================================================================================
+FOLHA — matrícula e período
+Chave analisada: ['matricula', 'ano_referencia', 'mes_referencia']
+================================================================================
+Registros em grupos repetidos: 8150
+Quantidade de grupos repetidos: 3132
+Grupos com registros totalmente iguais: 3132
+Grupos com diferenças: 0
+
+Não foram encontrados exemplos de grupos com diferenças.
+
+================================================================================
+GASTOS — processo, empenho e liquidação
+Chave analisada: ['processo', 'empenho', 'liquidacao']
+================================================================================
+Registros em grupos repetidos: 32168
+Quantidade de grupos repetidos: 13261
+Grupos com registros totalmente iguais: 0
+Grupos com diferenças: 13261
+
+Exemplos de grupos com diferenças:
+- Chave: ('31142002', '10000356', '655')
+  Registros no grupo: 2
+  Colunas diferentes: ['id', 'numero_pagamento', 'valor_pago', 'data_atualizacao']
+- Chave: ('28972002', '10000029', '207')
+  Registros no grupo: 2
+  Colunas diferentes: ['id', 'numero_pagamento', 'data_atualizacao']
+- Chave: ('19782002', '10000080', '174')
+  Registros no grupo: 3
+  Colunas diferentes: ['id', 'data_pagamento', 'numero_pagamento', 'valor_pago', 'data_atualizacao', 'mes_referencia']
+- Chave: ('19782002', '10000080', '321')
+  Registros no grupo: 3
+  Colunas diferentes: ['id', 'data_pagamento', 'numero_pagamento', 'valor_pago', 'data_atualizacao', 'mes_referencia']
+- Chave: ('20082002', '10000130', '197')
+  Registros no grupo: 2
+  Colunas diferentes: ['id', 'data_pagamento', 'numero_pagamento', 'valor_pago', 'data_atualizacao']
+
+================================================================================
+RECEITAS — ano, mês, código e órgão
+Chave analisada: ['ano', 'mes', 'codigo', 'orgao']
+================================================================================
+Registros em grupos repetidos: 13496
+Quantidade de grupos repetidos: 6718
+Grupos com registros totalmente iguais: 0
+Grupos com diferenças: 6718
+
+Exemplos de grupos com diferenças:
+- Chave: ('2021', '1', '1.2.4.0.00.0.0', '6300')
+  Registros no grupo: 3
+  Colunas diferentes: ['codigo_original']
+- Chave: ('2021', '1', '1.3.2.1.00.0.0', '6110')
+  Registros no grupo: 2
+  Colunas diferentes: ['codigo_original']
+- Chave: ('2021', '1', '1.3.2.1.00.0.0', '6109')
+  Registros no grupo: 2
+  Colunas diferentes: ['codigo_original']
+- Chave: ('2021', '1', '1.2.4.0.00.0.0', '2798')
+  Registros no grupo: 3
+  Colunas diferentes: ['codigo_original']
+- Chave: ('2021', '1', '1.9.1.0.00.0.0', '2798')
+  Registros no grupo: 2
+  Colunas diferentes: ['codigo_original']
+
+================================================================================
+RECEITAS — chave ampliada
+Chave analisada: ['ano', 'mes', 'codigo', 'orgao', 'descricao']
+================================================================================
+Registros em grupos repetidos: 13178
+Quantidade de grupos repetidos: 6565
+Grupos com registros totalmente iguais: 0
+Grupos com diferenças: 6565
+
+Exemplos de grupos com diferenças:
+- Chave: ('2021', '1', '1.2.4.0.00.0.0', '6300', 'CONTRIBUIÇÃO PARA O CUSTEIO DO SERVIÇO DE ILUMINAÇÃO PÚBLICA')
+  Registros no grupo: 3
+  Colunas diferentes: ['codigo_original']
+- Chave: ('2021', '1', '1.3.2.1.00.0.0', '6110', 'JUROS E CORREÇÕES MONETÁRIAS')
+  Registros no grupo: 2
+  Colunas diferentes: ['codigo_original']
+- Chave: ('2021', '1', '1.3.2.1.00.0.0', '6109', 'JUROS E CORREÇÕES MONETÁRIAS')
+  Registros no grupo: 2
+  Colunas diferentes: ['codigo_original']
+- Chave: ('2021', '1', '1.2.4.0.00.0.0', '2798', 'CONTRIBUIÇÃO PARA O CUSTEIO DO SERVIÇO DE ILUMINAÇÃO PÚBLICA')
+  Registros no grupo: 3
+  Colunas diferentes: ['codigo_original']
+- Chave: ('2021', '1', '1.9.1.0.00.0.0', '2798', 'MULTAS ADMINISTRATIVAS, CONTRATUAIS E JUDICIAIS')
+  Registros no grupo: 2
+  Colunas diferentes: ['codigo_original']

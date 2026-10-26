@@ -1,0 +1,5 @@
+2026-10-24 14:16:15,842 INFO Iniciando arrecadacao
+2026-10-24 14:16:16,178 INFO arrecadacao: 3542 linhas processadas
+2026-10-24 14:16:16,180 WARNING gastos_diretos: arquivo ausente C:\Users\Administrator\Desktop\AGENTE FINANÇAS PÚBLICAS\agente-financas-publicas\data\raw\csv\historico_gastos_diretos.csv
+2026-10-24 14:16:16,180 WARNING folha_pagamento: arquivo ausente C:\Users\Administrator\Desktop\AGENTE FINANÇAS PÚBLICAS\agente-financas-publicas\data\raw\csv\historico_folha_pagamento.csv
+2026-10-24 14:16:16,180 WARNING receitas_recentes: arquivo ausente C:\Users\Administrator\Desktop\AGENTE FINANÇAS PÚBLICAS\agente-financas-publicas\data\raw\csv\atual_receitas.csv

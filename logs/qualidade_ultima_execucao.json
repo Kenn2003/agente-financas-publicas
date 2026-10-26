@@ -1,10 +1,10 @@
 {
-  "executado_em": "2026-10-23T19:06:01.631365+00:00",
+  "executado_em": "2026-10-24T20:57:21.278654+00:00",
   "bases": {
     "arrecadacao": {
       "status": "ok",
-      "origem": "C:\\Users\\kennk\\agente-financas-publicas\\data\\raw\\csv\\historico_arrecadacao.csv",
-      "destino": "C:\\Users\\kennk\\agente-financas-publicas\\data\\processed\\arrecadacao.csv",
+      "origem": "C:\\Users\\Administrator\\Desktop\\AGENTE FINANÇAS PÚBLICAS\\agente-financas-publicas\\data\\raw\\csv\\historico_arrecadacao.csv",
+      "destino": "C:\\Users\\Administrator\\Desktop\\AGENTE FINANÇAS PÚBLICAS\\agente-financas-publicas\\data\\processed\\arrecadacao.csv",
       "transformacoes": {
         "base": "arrecadacao",
         "linhas_entrada": 3542,
@@ -43,14 +43,14 @@
     },
     "gastos_diretos": {
       "status": "ok",
-      "origem": "C:\\Users\\kennk\\agente-financas-publicas\\data\\raw\\csv\\historico_gastos_diretos.csv",
-      "destino": "C:\\Users\\kennk\\agente-financas-publicas\\data\\processed\\gastos_diretos.csv",
+      "origem": "C:\\Users\\Administrator\\Desktop\\AGENTE FINANÇAS PÚBLICAS\\agente-financas-publicas\\data\\raw\\csv\\historico_gastos_diretos.csv",
+      "destino": "C:\\Users\\Administrator\\Desktop\\AGENTE FINANÇAS PÚBLICAS\\agente-financas-publicas\\data\\processed\\gastos_diretos.csv",
       "transformacoes": {
         "base": "gastos_diretos",
         "linhas_entrada": 344323,
         "colunas_entrada": 48,
         "conversoes_invalidas": {
-          "data_liquidacao": 1,
+          "data_liquidacao": 0,
           "data": 0,
           "data_pagamento": 0,
           "valor_anulado": 0,
@@ -67,7 +67,7 @@
         "colunas": 38,
         "duplicadas_integralmente": 0,
         "nulos_por_coluna": {
-          "data_liquidacao": 19909,
+          "data_liquidacao": 19908,
           "data_pagamento": 65785,
           "historico": 2055
         }
@@ -75,8 +75,8 @@
     },
     "folha_pagamento": {
       "status": "ok",
-      "origem": "C:\\Users\\kennk\\agente-financas-publicas\\data\\raw\\csv\\historico_folha_pagamento.csv",
-      "destino": "C:\\Users\\kennk\\agente-financas-publicas\\data\\processed\\folha_pagamento.csv",
+      "origem": "C:\\Users\\Administrator\\Desktop\\AGENTE FINANÇAS PÚBLICAS\\agente-financas-publicas\\data\\raw\\csv\\historico_folha_pagamento.csv",
+      "destino": "C:\\Users\\Administrator\\Desktop\\AGENTE FINANÇAS PÚBLICAS\\agente-financas-publicas\\data\\processed\\folha_pagamento.csv",
       "transformacoes": {
         "base": "folha_pagamento",
         "linhas_entrada": 489378,
@@ -120,8 +120,8 @@
     },
     "receitas_recentes": {
       "status": "ok",
-      "origem": "C:\\Users\\kennk\\agente-financas-publicas\\data\\raw\\csv\\atual_receitas.csv",
-      "destino": "C:\\Users\\kennk\\agente-financas-publicas\\data\\processed\\receitas_recentes.csv",
+      "origem": "C:\\Users\\Administrator\\Desktop\\AGENTE FINANÇAS PÚBLICAS\\agente-financas-publicas\\data\\raw\\csv\\atual_receitas.csv",
+      "destino": "C:\\Users\\Administrator\\Desktop\\AGENTE FINANÇAS PÚBLICAS\\agente-financas-publicas\\data\\processed\\receitas_recentes.csv",
       "transformacoes": {
         "base": "receitas_recentes",
         "linhas_entrada": 103768,

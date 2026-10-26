@@ -1,0 +1,116 @@
+VERIFICAÇÕES APROFUNDADAS
+Nenhum arquivo Parquet foi alterado.
+
+================================================================================
+FOLHA DE PAGAMENTO
+================================================================================
+Registros: 489378
+IDs distintos: 484360
+Chave candidata: matricula + ano_referencia + mes_referencia
+  Colunas: ['matricula', 'ano_referencia', 'mes_referencia']
+  Registros pertencentes a grupos repetidos: 8150
+  Exemplos:
+    - ('1122621', '2019', '12'): 6 ocorrências
+    - ('152881', '2019', '12'): 6 ocorrências
+    - ('227041', '2019', '12'): 6 ocorrências
+    - ('228281', '2019', '12'): 6 ocorrências
+    - ('2021', '2019', '12'): 6 ocorrências
+    - ('413020622', '2019', '12'): 6 ocorrências
+    - ('413023768', '2019', '12'): 6 ocorrências
+    - ('231411', '2019', '12'): 6 ocorrências
+    - ('133701', '2019', '12'): 6 ocorrências
+    - ('155001', '2019', '12'): 6 ocorrências
+Chave candidata: id + ano_referencia + mes_referencia
+  Colunas: ['id', 'ano_referencia', 'mes_referencia']
+  Registros pertencentes a grupos repetidos: 8150
+  Exemplos:
+    - ('1221775', '2019', '12'): 6 ocorrências
+    - ('1221778', '2019', '12'): 6 ocorrências
+    - ('1221772', '2019', '12'): 6 ocorrências
+    - ('1221776', '2019', '12'): 6 ocorrências
+    - ('1221779', '2019', '12'): 6 ocorrências
+    - ('1221561', '2019', '12'): 6 ocorrências
+    - ('1221562', '2019', '12'): 6 ocorrências
+    - ('1221564', '2019', '12'): 6 ocorrências
+    - ('1221565', '2019', '12'): 6 ocorrências
+    - ('1221568', '2019', '12'): 6 ocorrências
+
+IDs repetidos e quantidade de períodos:
+         ocorrencias  periodos  meses
+id                                   
+1221564            6         1      1
+1221565            6         1      1
+1221568            6         1      1
+1221569            6         1      1
+1221561            6         1      1
+1221562            6         1      1
+1221779            6         1      1
+1221775            6         1      1
+1221778            6         1      1
+1221772            6         1      1
+1221664            6         1      1
+1221776            6         1      1
+1221524            5         1      1
+1221530            5         1      1
+1221531            5         1      1
+1221521            5         1      1
+1221520            5         1      1
+1221517            5         1      1
+1221516            5         1      1
+1221523            5         1      1
+
+Datas sentinela na folha:
+  - data_admissao: 0
+  - data_desligamento: 0
+  - data_atualizacao: 0
+
+================================================================================
+GASTOS DIRETOS
+================================================================================
+data_liquidacao igual a 0001-01-01: 1
+Chave candidata: processo + empenho + liquidacao
+  Colunas: ['processo', 'empenho', 'liquidacao']
+  Registros pertencentes a grupos repetidos: 32168
+  Exemplos:
+    - ('2019000088', '200051', '4'): 27 ocorrências
+    - ('2003680', '32000113', '1873'): 20 ocorrências
+    - ('2003680', '32000112', '1872'): 20 ocorrências
+    - ('2014030527', '201646', '1'): 19 ocorrências
+    - ('2019000088', '200051', '1'): 19 ocorrências
+    - ('2016054590', '17492', '1'): 18 ocorrências
+    - ('2019000088', '200051', '7'): 18 ocorrências
+    - ('2003686', '29000109', '2877'): 17 ocorrências
+    - ('2003686', '29000099', '2896'): 17 ocorrências
+    - ('2014030527', '12249', '1'): 17 ocorrências
+
+================================================================================
+RECEITAS RECENTES
+================================================================================
+Chave candidata: ano + mes + codigo + orgao
+  Colunas: ['ano', 'mes', 'codigo', 'orgao']
+  Registros pertencentes a grupos repetidos: 13496
+  Exemplos:
+    - ('2021', '1', '1.2.4.0.00.0.0', '6300'): 3 ocorrências
+    - ('2021', '1', '1.2.4.0.00.0.0', '2798'): 3 ocorrências
+    - ('2021', '1', '2.3.0.0.00.0.0', '5900'): 3 ocorrências
+    - ('2021', '1', '1.7.4.0.00.0.0', '3200'): 3 ocorrências
+    - ('2021', '1', '2.2.2.0.00.0.0', '2798'): 3 ocorrências
+    - ('2021', '2', '1.2.4.0.00.0.0', '6300'): 3 ocorrências
+    - ('2021', '2', '1.2.4.0.00.0.0', '2798'): 3 ocorrências
+    - ('2021', '2', '2.3.0.0.00.0.0', '5900'): 3 ocorrências
+    - ('2021', '2', '1.7.4.0.00.0.0', '3200'): 3 ocorrências
+    - ('2021', '2', '2.2.2.0.00.0.0', '2798'): 3 ocorrências
+Chave candidata: ano + mes + codigo + orgao + descricao
+  Colunas: ['ano', 'mes', 'codigo', 'orgao', 'descricao']
+  Registros pertencentes a grupos repetidos: 13178
+  Exemplos:
+    - ('2021', '1', '1.2.4.0.00.0.0', '6300', 'CONTRIBUIÇÃO PARA O CUSTEIO DO SERVIÇO DE ILUMINAÇÃO PÚBLICA'): 3 ocorrências
+    - ('2021', '1', '1.2.4.0.00.0.0', '2798', 'CONTRIBUIÇÃO PARA O CUSTEIO DO SERVIÇO DE ILUMINAÇÃO PÚBLICA'): 3 ocorrências
+    - ('2021', '1', '2.3.0.0.00.0.0', '5900', 'AMORTIZAÇÃO DE EMPRÉSTIMOS'): 3 ocorrências
+    - ('2021', '1', '2.2.2.0.00.0.0', '2798', 'ALIENAÇÃO DE BENS IMÓVEIS'): 3 ocorrências
+    - ('2021', '2', '1.2.4.0.00.0.0', '6300', 'CONTRIBUIÇÃO PARA O CUSTEIO DO SERVIÇO DE ILUMINAÇÃO PÚBLICA'): 3 ocorrências
+    - ('2021', '2', '1.2.4.0.00.0.0', '2798', 'CONTRIBUIÇÃO PARA O CUSTEIO DO SERVIÇO DE ILUMINAÇÃO PÚBLICA'): 3 ocorrências
+    - ('2021', '2', '2.3.0.0.00.0.0', '5900', 'AMORTIZAÇÃO DE EMPRÉSTIMOS'): 3 ocorrências
+    - ('2021', '2', '2.2.2.0.00.0.0', '2798', 'ALIENAÇÃO DE BENS IMÓVEIS'): 3 ocorrências
+    - ('2021', '3', '1.2.4.0.00.0.0', '6300', 'CONTRIBUIÇÃO PARA O CUSTEIO DO SERVIÇO DE ILUMINAÇÃO PÚBLICA'): 3 ocorrências
+    - ('2021', '3', '1.2.4.0.00.0.0', '2798', 'CONTRIBUIÇÃO PARA O CUSTEIO DO SERVIÇO DE ILUMINAÇÃO PÚBLICA'): 3 ocorrências

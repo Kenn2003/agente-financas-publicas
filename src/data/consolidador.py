@@ -350,12 +350,12 @@ def consolidar_receitas_recentes():
 
 if __name__ == "__main__":
 
-    # for nome_base in [
-    #     "arrecadacao",
-    #     "gastos_diretos",
-    #     "folha_pagamento"
-    # ]:
-    #     consolidar_csv(nome_base)
+    for nome_base in [
+        "arrecadacao",
+        "gastos_diretos",
+        "folha_pagamento"
+    ]:
+       consolidar_csv(nome_base)
 
     consolidar_receitas_recentes()
 
