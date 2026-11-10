@@ -11,12 +11,66 @@ from .tools import (
     consultar_execucao_empenho,
     rastrear_empenho,
 )
+from src.agents.despesas.loader_atual import (
+    consultar_execucao_atual,
+    rastrear_empenho_atual
+    )
 
 
 RAIZ = Path(__file__).resolve().parents[3]
 
 load_dotenv(RAIZ / ".env")
 
+def consultar_despesas_atuais(ano: int) -> dict:
+    """
+    Consulta os totais de empenhos, liquidações e pagamentos
+    de Palmas-TO nos exercícios de 2022 a 2026.
+
+    Args:
+        ano: Exercício solicitado, entre 2022 e 2026.
+
+    Returns:
+        Totais de execução orçamentária e limitações da base.
+    """
+    print(f"[TOOL] consultar_despesas_atuais(ano={ano})")
+
+    return consultar_execucao_atual(ano)
+
+def consultar_empenho_atual(
+    ano: int,
+    orgao: int,
+    empenho: int
+) -> dict:
+    """
+    Rastreia um empenho municipal entre 2022 e 2026.
+
+    Args:
+        ano: Exercício do empenho.
+        orgao: Código do órgão responsável pelo empenho.
+        empenho: Número do empenho.
+
+    Returns:
+        Valores empenhados, liquidados e pagos,
+        além da quantidade de movimentações.
+    """
+    print(
+        f"[TOOL] consultar_empenho_atual("
+        f"ano={ano}, orgao={orgao}, empenho={empenho})"
+    )
+
+    return rastrear_empenho_atual(
+        ano=ano,
+        orgao=orgao,
+        empenho=empenho
+    )
+
+FERRAMENTAS = [
+    consultar_execucao_atual,
+    consultar_empenho_atual,
+    consultar_execucao,
+    consultar_execucao_empenho,
+    rastrear_empenho,
+]
 
 class AgenteDespesas:
     def __init__(self):
@@ -36,11 +90,7 @@ class AgenteDespesas:
 
         self.config = types.GenerateContentConfig(
             system_instruction=SYSTEM_PROMPT,
-            tools=[
-                consultar_execucao,
-                consultar_execucao_empenho,
-                rastrear_empenho,
-            ],
+            tools=FERRAMENTAS,
             automatic_function_calling=(
                 types.AutomaticFunctionCallingConfig(
                     maximum_remote_calls=4

@@ -95,6 +95,37 @@ def buscar_orgaos(termo: str, ano: Optional[int] = None) -> dict:
     print(f"[TOOL] buscar_orgaos(termo={termo}, ano={ano})")
     return receitas_tools.buscar_orgaos(termo = termo, ano=ano)
 
+def agrupar_receitas(
+    ano: int,
+    agrupamento: str = "tributo",
+    mes: Optional[int] = None,
+    somente_principal: bool = False,
+) -> dict:
+    """Agrupa IPTU, ISS, ITBI e IRRF por códigos validados de 2024.
+
+    Args:
+        ano: Exercício da arrecadação; atualmente apenas 2024.
+        agrupamento: Tipo de agrupamento; atualmente 'tributo'.
+        mes: Mês de referência opcional (1 a 12).
+        somente_principal: Restringe a arrecadação ao principal,
+            quando houver código validado para o tributo.
+
+    Returns:
+        Totais por tributo e indicação de limitações de cobertura.
+    """
+    print(
+        f"[TOOL] agrupar_receitas(ano={ano}, "
+        f"agrupamento={agrupamento}, mes={mes}, "
+        f"somente_principal={somente_principal})"
+    )
+    return receitas_tools.agrupar_receitas(
+        ano=ano,
+        agrupamento=agrupamento,
+        mes=mes,
+        somente_principal=somente_principal,
+    )
+
+
 def mensagem_erro_agente(erro):
     """Converte erros da API em mensagens controladas."""
 
@@ -159,14 +190,13 @@ def extrair_resposta_textual(resposta):
         "A consulta não pôde ser concluída."
     )
 
-        
-
 
 FERRAMENTAS = [
     consultar_receitas,
     evolucao_arrecadacao,
     comparar_periodos,
-    buscar_orgaos
+    buscar_orgaos,
+    agrupar_receitas
 ]
 
 

@@ -6,8 +6,13 @@ from pathlib import Path
 from datetime import datetime, timezone
 
 BASE = "https://acessoainformacao.palmas.to.gov.br"
-MODULO = "sgreceitas"
-ACAO = "sgreceitas/listar"
+MODULOS = {
+    "receitas": "sgreceitas/listar",
+    "contratos": "sgcontratos/listar",
+    "despesas": "sgdespesas/listar",
+    "licitacoes": "sglicitacoes/listar",
+    "servidores": "sgservidores/listar"
+}
 
 NAVEGADOR = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -39,15 +44,25 @@ def salvar_json(caminho, dados):
     temporario.replace(caminho)
 
 
-def criar_sessao():
+MODULOS = {
+    "receitas": "sgreceitas/listar",
+    "contratos": "sgcontratos/listar",
+    "despesas": "sgdespesas/listar",
+    "licitacoes": "sglicitacoes/listar",
+    "servidores": "sgservidores/listar"
+}
 
+def criar_sessao(modulo):
     sessao = requests.Session()
 
     sessao.headers.update({
         "User-Agent": NAVEGADOR
     })
 
-    pagina = f"{BASE}/cidadao/transparencia/{MODULO}"
+    acao = MODULOS[modulo]
+    nome_modulo = acao.split("/")[0]
+
+    pagina = f"{BASE}/cidadao/transparencia/{nome_modulo}"
 
     resposta = sessao.get(pagina, timeout=60)
     resposta.raise_for_status()
@@ -55,17 +70,24 @@ def criar_sessao():
     return sessao
 
 
-def consultar(sessao, ano, mes, offset, quantidade):
+def consultar(sessao, modulo, offset, quantidade, ano=None, mes=None):
+
+    acao = MODULOS[modulo]
 
     consulta = {
         "k1": {
             "order": {},
             "limit": f"{offset}, {quantidade}",
-            "acao": ACAO,
-            "ano": str(ano),
-            "mes": str(mes)
+            "acao": acao
         }
     }
+
+    if modulo == "receitas":
+        if ano is not None:
+            consulta["k1"]["ano"] = str(ano)
+
+        if mes is not None:
+            consulta["k1"]["mes"] = str(mes)
 
     headers = {
         "X-Requested-With": "XMLHttpRequest",
@@ -73,7 +95,7 @@ def consultar(sessao, ano, mes, offset, quantidade):
             "application/x-www-form-urlencoded; charset=UTF-8"
         ),
         "Referer": (
-            f"{BASE}/cidadao/transparencia/{MODULO}"
+            f"{BASE}/cidadao/transparencia/{acao.split('/')[0]}"
         ),
         "Origin": BASE
     }
@@ -131,13 +153,14 @@ def consultar(sessao, ano, mes, offset, quantidade):
             time.sleep(espera)
 
 
-def baixar_mes(sessao, ano, mes, forcar=False):
+def baixar_mes(sessao, modulo, ano=None, mes=None, forcar=False):
 
-    pasta = (
-        PASTA_BASE
-        / str(ano)
-        / f"{mes:02d}"
-    )
+    if ano is not None and mes is not None:
+        pasta = PASTA_BASE / modulo / str(ano) / f"{mes:02d}"
+        periodo = f"{ano}/{mes:02d}"
+    else:
+        pasta = PASTA_BASE / modulo
+        periodo = modulo
 
     pasta.mkdir(parents=True, exist_ok=True)
 
@@ -155,7 +178,7 @@ def baixar_mes(sessao, ano, mes, forcar=False):
                 len(arquivos) == estado.get("paginas")
                 and all(a.stat().st_size > 0 for a in arquivos)
             ):
-                print(f"{ano}/{mes:02d}: já concluído.")
+                print(f"{periodo}: já concluído.")
                 return
 
     # Nova coleta: mantém snapshots anteriores em disco,
@@ -192,20 +215,21 @@ def baixar_mes(sessao, ano, mes, forcar=False):
             registros = dados["registros"]
             total = int(dados["total"])
 
-            print(f"{ano}/{mes:02d} página {pagina}: reutilizada")
+            print(f"{periodo} página {pagina}: reutilizada")
 
         else:
 
             registros, total = consultar(
                 sessao,
-                ano,
-                mes,
+                modulo,
                 offset,
-                TAMANHO_PAGINA
+                TAMANHO_PAGINA,
+                ano=ano,
+                mes=mes
             )
 
             dados = {
-                "fonte": ACAO,
+                "fonte": MODULOS[modulo],
                 "ano": ano,
                 "mes": mes,
                 "offset": offset,
@@ -220,7 +244,7 @@ def baixar_mes(sessao, ano, mes, forcar=False):
             salvar_json(arquivo, dados)
 
             print(
-                f"{ano}/{mes:02d} página {pagina}: "
+                f"{periodo} página {pagina}: "
                 f"{len(registros)} registros"
             )
 
@@ -266,31 +290,35 @@ def baixar_mes(sessao, ano, mes, forcar=False):
     )
 
     print(
-        f"Concluído {ano}/{mes:02d}: "
+        f"Concluído {periodo}: "
         f"{total_baixado} registros."
     )
 
 
 def main():
 
-    ano_atual = datetime.now().year
-    mes_atual = datetime.now().month
+    modulos_baixar = [
+        "contratos",
+        "despesas",
+        "licitacoes",
+        "servidores"
+    ]
 
-    with criar_sessao() as sessao:
+    for modulo in modulos_baixar:
 
-        for ano in range(2021, ano_atual + 1):
+        print(f"\nIniciando download: {modulo}")
 
-            ultimo_mes = (
-                mes_atual if ano == ano_atual else 12
+        with criar_sessao(modulo) as sessao:
+
+            baixar_mes(
+                sessao,
+                modulo=modulo,
+                ano=None,
+                mes=None
             )
 
-            for mes in range(1, ultimo_mes + 1):
+        print(f"Download finalizado: {modulo}")
 
-                baixar_mes(
-                    sessao,
-                    ano=ano,
-                    mes=mes
-                )
 
 if __name__ == "__main__":
     main()

@@ -245,4 +245,151 @@ def buscar_orgaos(
         ].to_dict(orient="records")
     }
 
+CODIGOS_TRIBUTARIOS_2024 = {
+    "IPTU": {
+        "total": "111250",
+        "principal": "11125001",
+        "multas_juros": "11125002",
+        "divida_ativa": "11125003",
+        "divida_ativa_multas_juros": "11125004",
+    },
+    "ISS": {
+        "total": "1114511",
+        "principal": "11145111",
+        "multas_juros": "11145112",
+        "divida_ativa": "11145113",
+        "divida_ativa_multas_juros": "11145114",
+    },
+    "ITBI": {
+        "total": "111253",
+        "principal": "11125301",
+        "multas_juros": "11125302",
+        "divida_ativa": "11125303",
+        "divida_ativa_multas_juros": "11125304",
+    },
+    "IRRF": {
+        "total": "111303",
+        "trabalho": "1113031",
+        "outros_rendimentos": "1113034",
+    },
+}
+
+
+def agrupar_receitas(
+    ano: int,
+    agrupamento: str = "tributo",
+    mes: int | None = None,
+    somente_principal: bool = False,
+) -> dict:
+    """Consulta tributos usando códigos sintéticos conciliados."""
+
+    if agrupamento != "tributo":
+        return {
+            "status": "erro",
+            "mensagem": "Agrupamento não suportado."
+        }
+
+    if ano != 2024:
+        return {
+            "status": "nao_validado",
+            "mensagem": (
+                "O mapeamento tributário está validado "
+                "somente para 2024."
+            )
+        }
+
+    if mes is not None and (
+        not isinstance(mes, int) or not 1 <= mes <= 12
+    ):
+        return {"status": "erro", "mensagem": "Mês inválido."}
+
+    caminho = (
+        Path(__file__).resolve().parents[3]
+        / "data"
+        / "processed"
+        / "receitas_recentes.csv"
+    )
+
+    df = pd.read_csv(caminho, low_memory=False)
+
+    df = df[df["ano"] == ano].copy()
+
+    if mes is not None:
+        df = df[df["mes"] == mes].copy()
+
+    if df.empty:
+        return {
+            "status": "sem_dados",
+            "ano": ano,
+            "mes": mes,
+            "resultados": []
+        }
+
+    df["codigo_original"] = (
+        df["codigo_original"].astype("string")
+    )
+
+    df["valor_arrecado_mes"] = pd.to_numeric(
+        df["valor_arrecado_mes"],
+        errors="coerce"
+    )
+
+    totais = (
+        df.groupby("codigo_original")["valor_arrecado_mes"]
+        .sum(min_count=1)
+    )
+
+    resultados = []
+
+    for tributo, codigos in CODIGOS_TRIBUTARIOS_2024.items():
+
+        if somente_principal:
+            if tributo == "IRRF":
+                resultados.append({
+                    "tributo": tributo,
+                    "valor": None,
+                    "status": "nao_disponivel",
+                    "observacao": (
+                        "Principal do IRRF requer "
+                        "mapeamento específico."
+                    )
+                })
+                continue
+
+            codigo = codigos["principal"]
+        else:
+            codigo = codigos["total"]
+
+        valor = totais.get(codigo)
+
+        if valor is None or pd.isna(valor):
+            resultados.append({
+                "tributo": tributo,
+                "valor": None,
+                "status": "sem_dados"
+            })
+            continue
+
+        resultados.append({
+            "tributo": tributo,
+            "valor": round(float(valor), 2),
+            "status": "ok"
+        })
+
+    return {
+        "status": "ok",
+        "ano": ano,
+        "mes": mes,
+        "agrupamento": agrupamento,
+        "somente_principal": somente_principal,
+        "resultados": resultados,
+        "observacao": (
+            "Códigos sintéticos conciliados para o "
+            "exercício de 2024. A conciliação anual "
+            "não substitui validações mensais."
+        )
+    }
+
+
+
 
