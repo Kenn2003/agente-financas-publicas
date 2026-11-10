@@ -50,7 +50,7 @@ def ler_zip_ibge(url):
                 arquivo_csv,
                 sep=";",
                 dtype=str,
-                encoding="utf-8",
+                encoding="latin-1",
                 low_memory=False
             )
 

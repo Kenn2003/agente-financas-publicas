@@ -15,19 +15,19 @@ def localizar_divida_ativa():
         RAIZ / "relatorio_d#U00edvida_ativa.csv",
     ]
 
-    for caminho in candidatos:
-        if caminho.exists():
-            return caminho
+    # for caminho in candidatos:
+    #     if caminho.exists():
+    #         return caminho
 
-    encontrados = list(RAIZ.glob("*vida_ativa.csv")) + list(RAIZ.glob("*ativa.csv"))
+    # encontrados = list(RAIZ.glob("*vida_ativa.csv")) + list(RAIZ.glob("*ativa.csv"))
 
-    if encontrados:
-        return encontrados[0]
+    # if encontrados:
+    #     return encontrados[0]
 
-    raise FileNotFoundError(
-        "Arquivo de dívida ativa não encontrado. "
-        "Coloque o CSV na mesma pasta do EDA.py."
-    )
+    # raise FileNotFoundError(
+    #     "Arquivo de dívida ativa não encontrado. "
+    #     "Coloque o CSV na mesma pasta do EDA.py."
+    # )
 
 
 def carregar_dados():
