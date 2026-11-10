@@ -13,6 +13,7 @@ from .prompts_orchestrador import (
 
 from .receitas.agent import AgenteReceitas
 from .despesas.agent import AgenteDespesas
+from .licitacoes.agent import AgenteLicitacoes
 
 
 RAIZ = Path(__file__).resolve().parents[2]
@@ -20,7 +21,7 @@ load_dotenv(RAIZ / ".env")
 
 
 class Orquestrador:
-    AGENTES_DISPONIVEIS = ("receitas", "despesas")
+    AGENTES_DISPONIVEIS = ("receitas", "despesas", "licitacoes")
 
     def __init__(self):
         chave = os.getenv("GEMINI_API_KEY")
@@ -49,6 +50,7 @@ class Orquestrador:
             classes = {
                 "receitas": AgenteReceitas,
                 "despesas": AgenteDespesas,
+                "licitacoes": AgenteLicitacoes,
             }
 
             self.agentes[nome] = classes[nome]()
@@ -175,7 +177,13 @@ class Orquestrador:
             selecionados = [
                 tarefa["agente"] for tarefa in tarefas
             ]
-        except Exception:
+        
+        except Exception as erro:
+            print(
+                f"[ORQUESTRADOR] Erro no roteamento: "
+                f"{type(erro).__name__}: {erro}"
+            )
+        
             return {
                 "status": "erro_roteamento",
                 "agentes_acionados": [],
@@ -183,7 +191,9 @@ class Orquestrador:
                     "Não foi possível identificar "
                     "o agente responsável."
                 ),
+                "erro_tecnico": str(erro),
             }
+
 
         if not selecionados:
             return {
@@ -203,10 +213,7 @@ class Orquestrador:
             pergunta_especialista = tarefa["pergunta"]
             
             try:
-                agente = {
-                    "receitas": AgenteReceitas,
-                    "despesas": AgenteDespesas,
-                }[nome]()
+                agente = self.obter_agente(nome)
 
                 pergunta_isolada = (
                     "Responda exclusivamente à seguinte consulta "
@@ -216,10 +223,18 @@ class Orquestrador:
                 )
                 
                 resultado = agente.responder(pergunta_isolada)
+                print(f"\n[DEBUG] Agente: {nome}")
+                print(f"[DEBUG] Resposta: {resultado!r}")
                 
                 
+                if not isinstance(resultado, str):
+                    raise TypeError("Resposta do agente não é texto.")
+
                 mensagens_erro = (
                     "não foi possível processar a consulta",
+                    "não foi possível concluir a consulta",
+                    "cota temporária da api gemini",
+                    "limite temporário de requisições",
                     "resource_exhausted",
                     "quota exceeded",
                     "429 ",
@@ -233,11 +248,6 @@ class Orquestrador:
                         f"Falha na execução do agente {nome}"
                     )
 
-                if not isinstance(resultado, str):
-                    raise TypeError(
-                        "Resposta do agente não é texto."
-                    )
-
                 if not resultado.strip():
                     raise ValueError(
                         "Resposta vazia do agente."
@@ -245,8 +255,16 @@ class Orquestrador:
 
                 respostas[nome] = resultado
 
-            except Exception:
+            
+            except Exception as erro:
+                print(
+                    f"\n[ORQUESTRADOR] Falha no agente '{nome}'"
+                )
+                print("Tipo:", type(erro).__name__)
+                print("Mensagem:", str(erro))
+            
                 falhas.append(nome)
+
 
         if not respostas:
             return {
