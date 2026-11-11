@@ -5,6 +5,8 @@ from pathlib import Path
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
+import time
+from google.genai import errors
 
 from .prompts_orchestrador import (
     PROMPT_ROTEAMENTO,
@@ -14,6 +16,7 @@ from .prompts_orchestrador import (
 from .receitas.agent import AgenteReceitas
 from .despesas.agent import AgenteDespesas
 from .licitacoes.agent import AgenteLicitacoes
+from .contratos.agent import AgenteContratos
 
 
 RAIZ = Path(__file__).resolve().parents[2]
@@ -21,7 +24,12 @@ load_dotenv(RAIZ / ".env")
 
 
 class Orquestrador:
-    AGENTES_DISPONIVEIS = ("receitas", "despesas", "licitacoes")
+    AGENTES_DISPONIVEIS = (
+        "receitas",
+        "despesas",
+        "licitacoes",
+        "contratos",
+        )
 
     def __init__(self):
         chave = os.getenv("GEMINI_API_KEY")
@@ -51,6 +59,7 @@ class Orquestrador:
                 "receitas": AgenteReceitas,
                 "despesas": AgenteDespesas,
                 "licitacoes": AgenteLicitacoes,
+                "contratos": AgenteContratos,
             }
 
             self.agentes[nome] = classes[nome]()
@@ -85,16 +94,28 @@ class Orquestrador:
             "required": ["tarefas"],
         }
 
-        resposta = self.client.models.generate_content(
-            model=self.modelo,
-            contents=pergunta,
-            config=types.GenerateContentConfig(
-                system_instruction=PROMPT_ROTEAMENTO,
-                response_mime_type="application/json",
-                response_schema=esquema,
-                temperature=0,
-            ),
-        )
+        for tentativa in range(3):
+            try:
+                resposta = self.client.models.generate_content(
+                    model=self.modelo,
+                    contents=pergunta,
+                    config=types.GenerateContentConfig(
+                        system_instruction=PROMPT_ROTEAMENTO,
+                        response_mime_type="application/json",
+                        response_schema=esquema,
+                        temperature=0,
+                    ),
+                )
+                break
+            except errors.ServerError as erro:
+                if erro.code != 503 or tentativa == 2:
+                    raise
+                espera = 2 ** (tentativa + 1)
+                print(
+                    f"[AVISO] Gemini indisponível (503). "
+                    f"Nova tentativa em {espera}s."
+                )
+                time.sleep(espera)
 
         if not resposta.text:
             raise RuntimeError(

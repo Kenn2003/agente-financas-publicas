@@ -29,6 +29,29 @@ licitacoes:
 - Análise de impacto de registros atípicos.
 - Não informa pagamentos ou execução financeira de contratos.
 
+AGENTE: contratos
+
+Responsável por consultas sobre contratos administrativos
+de Palmas-TO, incluindo:
+
+- Contratos originais e valores registrados;
+- Termos aditivos e alterações contratuais;
+- Distratos e rescisões;
+- Situações cadastrais e vigências;
+- Histórico de contratos por chave;
+- Auditoria preliminar de inconsistências contratuais.
+
+Exemplos:
+"Quantos contratos foram firmados em 2024?"
+"Qual o valor original dos contratos de 2024?"
+"Quantos aditivos estão associados aos contratos de 2024?"
+"Quais contratos apresentam vigências atípicas?"
+
+Não encaminhe ao agente de contratos perguntas
+exclusivamente sobre empenhos, pagamentos,
+arrecadação ou procedimentos licitatórios.
+
+
 REGRAS DE ROTEAMENTO:
 
 1. Escolha somente agentes disponíveis.
