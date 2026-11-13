@@ -6,7 +6,7 @@ O Agente Inteligente para Análise da Gestão Financeira Municipal é um Projeto
 
 O projeto reúne informações relacionadas a receitas, despesas, contratos, licitações e servidores públicos, buscando organizar os dados para facilitar análises, identificar padrões e apoiar a compreensão da gestão financeira municipal.
 
-A solução utiliza Python para processamento e análise de dados, estruturas de dados, armazenamento relacional e ferramentas que poderão apoiar futuras consultas por meio de Inteligência Artificial.
+Projeto em desenvolvimento incremental, com documentação e entregas por sprint.
 
 ## 2. Tecnologias utilizadas
 
@@ -249,79 +249,70 @@ A execução do pipeline ETL descrito neste documento não realiza automaticamen
 O arquivo `.env.example` apresenta um modelo de configuração:
 
 ```text
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=agente_financas_publicas
-DB_USER=postgres
-DB_PASSWORD=coloque_sua_senha_local_aqui
+Dados públicos municipais
+          ↓
+       CSV bruto
+          ↓
+   Carregamento (Pandas)
+          ↓
+    Pré-processamento
+          ↓
+       DataFrames
+          ↓
+ ┌────────┬────────┬────────┐
+ │ Grafo  │  Heap  │  Hash  │
+ └────────┴────────┴────────┘
+          ↓
+   Banco Relacional
+ PostgreSQL / Supabase
+          ↓
+ Ferramentas Analíticas
+          ↓
+      Agente de IA
 ```
 
-Os valores devem ser ajustados conforme a configuração do banco utilizado.
+## Sprint 4 — Modelagem e MVP
 
-O arquivo de exemplo não configura automaticamente as variáveis de ambiente. Cada script deve estar preparado para ler essas variáveis ou carregar o arquivo de ambiente.
+### Entregáveis de Arthur
 
-Nunca publique senhas, tokens ou credenciais reais no GitHub. O arquivo `.env` com dados sensíveis deve permanecer fora do controle de versão.
+- `notebooks/sprint04_modelagem.ipynb`: notebook autocontido com limpeza, EDA, criação das features e alvos de demonstração, split temporal, treino dos baselines e modelos finais, avaliação e serialização.
+- `models/baseline.joblib`: Regressão Logística e Árvore de Decisão como baselines.
+- `models/inadimplencia.joblib`: Random Forest ajustada por busca com validação cruzada temporal.
+- `models/recuperabilidade.joblib`: classificador das faixas de recuperabilidade.
 
-## 11. Geração dos arquivos Parquet: etapa futura
+### Limitação dos rótulos
 
-A geração automatizada dos arquivos Parquet ainda não foi implementada integralmente no fluxo atual do projeto.
+O arquivo `relatorio_dívida_ativa.csv` contém valor e data de inscrição, mas não possui histórico observado de pagamento, inadimplência ou recuperação. Por isso, os rótulos usados são **proxies sintéticos**, definidos por regras explícitas e uma semente fixa. As métricas demonstram o funcionamento do pipeline; não medem desempenho real e não devem orientar cobrança de contribuintes. A coluna `Nome` é descartada e não é usada como feature.
 
-Embora exista o diretório `data/ready/` e tenham sido incluídos arquivos Parquet no repositório, os scripts responsáveis por gerar esses arquivos a partir do fluxo atual ainda precisam ser desenvolvidos e integrados.
+O split é cronológico: treino até 30/04/2026, validação de 01/05 a 30/06/2026 e teste após 30/06/2026. A validação cruzada para selecionar hiperparâmetros ocorre somente dentro do treino. As métricas por faixas de valor e idade também usam rótulos sintéticos.
 
-Essa etapa foi adiada porque o processamento das bases pode consumir uma quantidade significativa de memória RAM, dependendo do volume de dados. Sua implementação deverá considerar estratégias para reduzir o consumo de memória e permitir o processamento de forma mais eficiente.
+### Abrir e executar o notebook
 
-**A geração dos arquivos Parquet não é obrigatória para a entrega atual.** O foco desta etapa está no pipeline de processamento CSV, nas transformações e nas validações implementadas. A criação automatizada dos Parquets será tratada como uma melhoria futura, sem impedir a continuidade das demais atividades do projeto.
+Na raiz do repositório, instale as dependências que não estão no `requirements.txt` e abra `notebooks/sprint04_modelagem.ipynb` no Jupyter ou no VS Code:
 
-Portanto, os arquivos Parquet atualmente presentes no repositório não devem ser interpretados como evidência de que sua geração automatizada e reproduzível já está concluída.
+```powershell
+python -m pip install scikit-learn joblib
+```
 
-## 12. Organização e responsabilidades da equipe
+Execute as células na ordem. O notebook lê `relatorio_dívida_ativa.csv` e grava os três modelos em `models/`.
 
-A divisão de responsabilidades da Sprint 3 está organizada da seguinte forma:
+### Carregar um modelo no MVP
 
-| Integrante | Responsabilidade |
-|---|---|
-| Responsável pela coleta automatizada | Coleta automatizada dos dados |
-| Matheus | Enriquecimento dos dados com informações do IBGE |
-| Kenneth | Implementação do pipeline ETL |
-| Karyne | Banco de dados e persistência |
-| Arthur | Análise exploratória de dados (EDA) e mapa |
-| Rafael | Documentação do projeto no README.md |
-| Kenneth, na integração final | Integração dos componentes e validação final |
+Os arquivos `.joblib` são dicionários; o estimador final fica na chave `estimator`. A interface deve preparar as mesmas features, sem nome ou identificador:
 
-A divisão representa as responsabilidades atribuídas à equipe. O estado de conclusão de cada atividade deve ser confirmado pelos integrantes e pelos registros de commits e pull requests.
+```python
+from pathlib import Path
+import joblib
+import numpy as np
+import pandas as pd
 
-## 13. Qualidade, privacidade e uso dos dados
+pacote = joblib.load(Path("models") / "inadimplencia.joblib")
+data_referencia = pd.Timestamp(pacote["data_referencia"])
+entrada = pd.DataFrame([{
+    "log_valor_divida": np.log1p(valor_divida),
+    "idade_divida_dias": max(0, (data_referencia - data_inscricao).days),
+}])[pacote["features"]]
+probabilidade_proxy = pacote["estimator"].predict_proba(entrada)[0, 1]
+```
 
-O projeto utiliza dados públicos para fins acadêmicos e analíticos. Mesmo quando os dados são publicamente acessíveis, seu uso deve respeitar a finalidade do projeto e os princípios de segurança, transparência e responsabilidade.
-
-Recomenda-se:
-
-- Preservar os arquivos originais para possibilitar a rastreabilidade das transformações.
-- Registrar erros, conversões inválidas e valores ausentes.
-- Evitar inferir informações que não estejam presentes nas bases.
-- Não divulgar credenciais de acesso ao banco.
-- Avaliar a necessidade de restringir ou agregar dados que possam expor informações pessoais.
-- Documentar a origem e a data de obtenção de cada base utilizada.
-- Interpretar os indicadores considerando a cobertura, a atualização e as limitações dos dados disponíveis.
-
-As fontes oficiais específicas e as datas de extração de cada conjunto de dados devem ser registradas conforme forem confirmadas pela equipe.
-
-## 14. Próximas etapas
-
-Entre as melhorias previstas para o projeto estão:
-
-- Desenvolvimento dos scripts de geração dos arquivos Parquet.
-- Otimização do processamento para reduzir o consumo de memória RAM.
-- Integração do enriquecimento de dados com informações do IBGE.
-- Integração do pipeline com a carga no banco relacional.
-- Continuidade das validações de consistência e qualidade.
-- Desenvolvimento das análises exploratórias e do mapa.
-- Evolução das ferramentas analíticas e da futura interface de consulta.
-
-Essas melhorias serão implementadas de forma incremental, conforme as prioridades e os recursos disponíveis para cada etapa do projeto.
-
-## 15. Considerações finais
-
-O projeto busca transformar dados públicos municipais em informações organizadas e úteis para a análise da gestão financeira. A documentação, o controle de qualidade e a reprodutibilidade são partes essenciais desse processo, permitindo que outros integrantes da equipe e avaliadores compreendam como configurar o ambiente, processar os dados e verificar os resultados.
-
-A documentação reflete o fluxo ETL CSV disponível nesta etapa e identifica explicitamente a geração automatizada dos arquivos Parquet como uma melhoria futura.
+`probabilidade_proxy` serve apenas para demonstração acadêmica enquanto não houver rótulos observados.
