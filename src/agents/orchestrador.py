@@ -8,15 +8,16 @@ from google.genai import types
 import time
 from google.genai import errors
 
-from .prompts_orchestrador import (
+from src.agents.prompts_orchestrador import (
     PROMPT_ROTEAMENTO,
     PROMPT_SINTESE,
 )
 
-from .receitas.agent import AgenteReceitas
-from .despesas.agent import AgenteDespesas
-from .licitacoes.agent import AgenteLicitacoes
-from .contratos.agent import AgenteContratos
+from src.agents.receitas.agent import AgenteReceitas
+from src.agents.despesas.agent import AgenteDespesas
+from src.agents.licitacoes.agent import AgenteLicitacoes
+from src.agents.contratos.agent import AgenteContratos
+from src.agents.divida_ativa.agent import AgenteDividaAtiva
 
 
 RAIZ = Path(__file__).resolve().parents[2]
@@ -60,6 +61,7 @@ class Orquestrador:
                 "despesas": AgenteDespesas,
                 "licitacoes": AgenteLicitacoes,
                 "contratos": AgenteContratos,
+                "divida_ativa": AgenteDividaAtiva,
             }
 
             self.agentes[nome] = classes[nome]()
@@ -259,6 +261,8 @@ class Orquestrador:
                     "resource_exhausted",
                     "quota exceeded",
                     "429 ",
+                    "api gemini indisponível",
+                    "erro da api gemini",
                 )
 
                 if any(
@@ -304,7 +308,7 @@ class Orquestrador:
             )
         else:
             resposta_final = "\n\n".join(
-                f"### {nome.title()}\n{texto}"
+                f"### {nome.replace('_', ' ').title()}\n{texto}"
                 for nome, texto in respostas.items()
             )
 
@@ -313,7 +317,9 @@ class Orquestrador:
                 "de receitas e despesas podem utilizar "
                 "bases e critérios temporais distintos. "
                 "Não representam automaticamente um "
-                "resultado orçamentário ou fiscal."
+                "resultado orçamentário ou fiscal. "
+                "Valores inscritos em dívida ativa não equivalem "
+                "a receitas arrecadadas ou saldos atualizados."
             )
 
 

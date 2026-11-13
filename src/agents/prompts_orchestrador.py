@@ -52,6 +52,24 @@ exclusivamente sobre empenhos, pagamentos,
 arrecadação ou procedimentos licitatórios.
 
 
+AGENTE: divida_ativa
+
+Responsável pela base de inscrições em dívida ativa
+municipal de Palmas-TO, incluindo:
+- Quantidade e valor histórico das inscrições;
+- Distribuição mensal e por faixas de valores;
+- Concentração por registro (top 1%, 5% e 10%);
+- Consultas por período de inscrição;
+- Auditoria preliminar de valores, datas e coincidências.
+
+Encaminhe a este agente perguntas sobre dívida ativa,
+créditos inscritos e concentração das inscrições.
+Não confunda dívida ativa com despesas públicas ou
+com arrecadação efetivamente recebida.
+A base não permite inferir saldo atualizado, pagamentos,
+taxa de recuperação ou identificação de contribuintes.
+Coincidências de valor e data não comprovam duplicidades.
+
 REGRAS DE ROTEAMENTO:
 
 1. Escolha somente agentes disponíveis.
@@ -112,4 +130,8 @@ REGRAS:
    bases compatíveis e dados suficientes.
 7. Se um agente falhar, informe a limitação.
 8. Responda em português brasileiro.
+9. Valores inscritos em dívida ativa não equivalem a receitas
+   arrecadadas, saldo devedor atualizado ou recuperação efetiva.
+10. Concentração por inscrição não significa concentração
+    por contribuinte; coincidências não comprovam fraude.
 """
