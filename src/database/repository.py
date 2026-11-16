@@ -2,7 +2,7 @@ from contextlib import contextmanager
 from pathlib import Path
 import os
 
-import psycopg2
+import psycopg
 from dotenv import load_dotenv
 
 
@@ -31,25 +31,26 @@ def obter_configuracao():
 
 @contextmanager
 def conectar():
-    """Abre uma conexão e garante seu fechamento."""
-    conexao = psycopg2.connect(**obter_configuracao())
+    """Abre uma conexão e garante commit, rollback e fechamento."""
+    conexao = psycopg.connect(**obter_configuracao())
 
     try:
         yield conexao
+        conexao.commit()
+    except Exception:
+        conexao.rollback()
+        raise
     finally:
         conexao.close()
 
 
 def executar_consulta(consulta, parametros=None):
-    """
-    Executa uma consulta parametrizada e retorna os registros como dicionários.
-    """
+    """Executa uma consulta parametrizada e retorna os registros como dicionários."""
     with conectar() as conexao:
         with conexao.cursor() as cursor:
             cursor.execute(consulta, parametros or ())
 
             if cursor.description is None:
-                conexao.commit()
                 return []
 
             colunas = [descricao[0] for descricao in cursor.description]
@@ -113,6 +114,9 @@ def listar_cargas():
 
 def arrecadacao_por_ano(ano=None):
     """Consulta valores de arrecadação agrupados por ano."""
+    if ano is not None:
+        ano = str(ano)
+
     consulta = """
         SELECT
             ano,
@@ -129,6 +133,9 @@ def arrecadacao_por_ano(ano=None):
 
 def gastos_por_ano(ano=None):
     """Consulta gastos agrupados por ano."""
+    if ano is not None:
+        ano = str(ano)
+
     consulta = """
         SELECT
             ano_referencia,
