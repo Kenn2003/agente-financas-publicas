@@ -3,8 +3,10 @@ numpy
 streamlit
 plotly
 networkx
-matplotlib 
-
+matplotlib
 psycopg[binary]
-
 requests
+google-genai
+python-dotenv
+scikit-learn==1.8.0
+joblib
