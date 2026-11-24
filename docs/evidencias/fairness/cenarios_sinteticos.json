@@ -1,0 +1,120 @@
+{
+  "natureza": "dados_integralmente_sinteticos",
+  "aviso": "Grupos ficticios, sem correspondencia com contribuintes ou territorios reais.",
+  "cenarios": {
+    "paridade": {
+      "grupos": [
+        {
+          "grupo": "A",
+          "n": 4,
+          "tp": 1,
+          "tn": 1,
+          "fp": 1,
+          "fn": 1,
+          "taxa_selecao": 0.5,
+          "tpr": 0.5,
+          "fpr": 0.5,
+          "fnr": 0.5,
+          "precisao": 0.5,
+          "acuracia": 0.5
+        },
+        {
+          "grupo": "B",
+          "n": 4,
+          "tp": 1,
+          "tn": 1,
+          "fp": 1,
+          "fn": 1,
+          "taxa_selecao": 0.5,
+          "tpr": 0.5,
+          "fpr": 0.5,
+          "fnr": 0.5,
+          "precisao": 0.5,
+          "acuracia": 0.5
+        }
+      ],
+      "demographic_parity_difference": 0.0,
+      "equal_opportunity_difference": 0.0,
+      "disparate_impact_ratio": 1.0,
+      "false_positive_rate_difference": 0.0,
+      "false_negative_rate_difference": 0.0,
+      "finalidade": "diagnostico_experimental"
+    },
+    "disparidade": {
+      "grupos": [
+        {
+          "grupo": "A",
+          "n": 4,
+          "tp": 2,
+          "tn": 1,
+          "fp": 1,
+          "fn": 0,
+          "taxa_selecao": 0.75,
+          "tpr": 1.0,
+          "fpr": 0.5,
+          "fnr": 0.0,
+          "precisao": 0.6666666666666666,
+          "acuracia": 0.75
+        },
+        {
+          "grupo": "B",
+          "n": 4,
+          "tp": 1,
+          "tn": 2,
+          "fp": 0,
+          "fn": 1,
+          "taxa_selecao": 0.25,
+          "tpr": 0.5,
+          "fpr": 0.0,
+          "fnr": 0.5,
+          "precisao": 1.0,
+          "acuracia": 0.75
+        }
+      ],
+      "demographic_parity_difference": 0.5,
+      "equal_opportunity_difference": 0.5,
+      "disparate_impact_ratio": 0.3333333333333333,
+      "false_positive_rate_difference": 0.5,
+      "false_negative_rate_difference": 0.5,
+      "finalidade": "diagnostico_experimental"
+    },
+    "paridade_selecao_sem_equal_opportunity": {
+      "grupos": [
+        {
+          "grupo": "A",
+          "n": 4,
+          "tp": 2,
+          "tn": 2,
+          "fp": 0,
+          "fn": 0,
+          "taxa_selecao": 0.5,
+          "tpr": 1.0,
+          "fpr": 0.0,
+          "fnr": 0.0,
+          "precisao": 1.0,
+          "acuracia": 1.0
+        },
+        {
+          "grupo": "B",
+          "n": 4,
+          "tp": 0,
+          "tn": 0,
+          "fp": 2,
+          "fn": 2,
+          "taxa_selecao": 0.5,
+          "tpr": 0.0,
+          "fpr": 1.0,
+          "fnr": 1.0,
+          "precisao": 0.0,
+          "acuracia": 0.0
+        }
+      ],
+      "demographic_parity_difference": 0.0,
+      "equal_opportunity_difference": 1.0,
+      "disparate_impact_ratio": 1.0,
+      "false_positive_rate_difference": 1.0,
+      "false_negative_rate_difference": 1.0,
+      "finalidade": "diagnostico_experimental"
+    }
+  }
+}

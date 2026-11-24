@@ -1,0 +1,580 @@
+{
+  "natureza": "diagnostico_experimental",
+  "alvos": "sinteticos_nao_observados",
+  "unidade_analise": "registros_de_divida",
+  "registros_validos": 38557,
+  "registros_teste": 11048,
+  "seed": 42,
+  "matrizes_originais_reproduzidas": true,
+  "versoes": {
+    "python": "3.12.10",
+    "pandas": "3.1.1",
+    "numpy": "2.5.5",
+    "scikit_learn": "1.8.0"
+  },
+  "grupos_observados": {
+    "faixa_valor": [
+      "500_a_5000",
+      "acima_5000",
+      "ate_500"
+    ],
+    "faixa_idade": [
+      "acima_60_dias",
+      "ate_30_dias"
+    ]
+  },
+  "modelos": {
+    "regressao_logistica": {
+      "faixa_valor": {
+        "grupos": [
+          {
+            "grupo": "500_a_5000",
+            "n": 3409,
+            "tp": 365,
+            "tn": 1696,
+            "fp": 918,
+            "fn": 430,
+            "taxa_selecao": 0.37635670284540923,
+            "tpr": 0.4591194968553459,
+            "fpr": 0.35118592195868403,
+            "fnr": 0.5408805031446541,
+            "precisao": 0.284489477786438,
+            "acuracia": 0.6045761220299208
+          },
+          {
+            "grupo": "acima_5000",
+            "n": 343,
+            "tp": 143,
+            "tn": 0,
+            "fp": 200,
+            "fn": 0,
+            "taxa_selecao": 1.0,
+            "tpr": 1.0,
+            "fpr": 1.0,
+            "fnr": 0.0,
+            "precisao": 0.41690962099125367,
+            "acuracia": 0.41690962099125367
+          },
+          {
+            "grupo": "ate_500",
+            "n": 7296,
+            "tp": 0,
+            "tn": 6431,
+            "fp": 0,
+            "fn": 865,
+            "taxa_selecao": 0.0,
+            "tpr": 0.0,
+            "fpr": 0.0,
+            "fnr": 1.0,
+            "precisao": null,
+            "acuracia": 0.8814418859649122
+          }
+        ],
+        "demographic_parity_difference": 1.0,
+        "equal_opportunity_difference": 1.0,
+        "disparate_impact_ratio": 0.0,
+        "false_positive_rate_difference": 1.0,
+        "false_negative_rate_difference": 1.0,
+        "finalidade": "diagnostico_experimental"
+      },
+      "faixa_idade": {
+        "grupos": [
+          {
+            "grupo": "acima_60_dias",
+            "n": 11046,
+            "tp": 508,
+            "tn": 8126,
+            "fp": 1117,
+            "fn": 1295,
+            "taxa_selecao": 0.14711207676987145,
+            "tpr": 0.2817526344980588,
+            "fpr": 0.12084820945580439,
+            "fnr": 0.7182473655019412,
+            "precisao": 0.31261538461538463,
+            "acuracia": 0.78164041281912
+          },
+          {
+            "grupo": "ate_30_dias",
+            "n": 2,
+            "tp": 0,
+            "tn": 1,
+            "fp": 1,
+            "fn": 0,
+            "taxa_selecao": 0.5,
+            "tpr": null,
+            "fpr": 0.5,
+            "fnr": null,
+            "precisao": 0.0,
+            "acuracia": 0.5
+          }
+        ],
+        "demographic_parity_difference": 0.3528879232301285,
+        "equal_opportunity_difference": null,
+        "disparate_impact_ratio": 0.2942241535397429,
+        "false_positive_rate_difference": 0.3791517905441956,
+        "false_negative_rate_difference": null,
+        "finalidade": "diagnostico_experimental"
+      }
+    },
+    "arvore_decisao": {
+      "faixa_valor": {
+        "grupos": [
+          {
+            "grupo": "500_a_5000",
+            "n": 3409,
+            "tp": 656,
+            "tn": 539,
+            "fp": 2075,
+            "fn": 139,
+            "taxa_selecao": 0.8011146963919038,
+            "tpr": 0.8251572327044026,
+            "fpr": 0.7938026013771997,
+            "fnr": 0.17484276729559747,
+            "precisao": 0.24020505309410473,
+            "acuracia": 0.35054268113816367
+          },
+          {
+            "grupo": "acima_5000",
+            "n": 343,
+            "tp": 78,
+            "tn": 94,
+            "fp": 106,
+            "fn": 65,
+            "taxa_selecao": 0.5364431486880467,
+            "tpr": 0.5454545454545454,
+            "fpr": 0.53,
+            "fnr": 0.45454545454545453,
+            "precisao": 0.42391304347826086,
+            "acuracia": 0.5014577259475219
+          },
+          {
+            "grupo": "ate_500",
+            "n": 7296,
+            "tp": 3,
+            "tn": 6411,
+            "fp": 20,
+            "fn": 862,
+            "taxa_selecao": 0.003152412280701754,
+            "tpr": 0.003468208092485549,
+            "fpr": 0.0031099362463069507,
+            "fnr": 0.9965317919075144,
+            "precisao": 0.13043478260869565,
+            "acuracia": 0.8791118421052632
+          }
+        ],
+        "demographic_parity_difference": 0.7979622841112021,
+        "equal_opportunity_difference": 0.821689024611917,
+        "disparate_impact_ratio": 0.003935032392864255,
+        "false_positive_rate_difference": 0.7906926651308928,
+        "false_negative_rate_difference": 0.821689024611917,
+        "finalidade": "diagnostico_experimental"
+      },
+      "faixa_idade": {
+        "grupos": [
+          {
+            "grupo": "acima_60_dias",
+            "n": 11046,
+            "tp": 737,
+            "tn": 7043,
+            "fp": 2200,
+            "fn": 1066,
+            "taxa_selecao": 0.2658881042911461,
+            "tpr": 0.408763172490294,
+            "fpr": 0.23801795953694688,
+            "fnr": 0.5912368275097061,
+            "precisao": 0.250936329588015,
+            "acuracia": 0.7043273583197538
+          },
+          {
+            "grupo": "ate_30_dias",
+            "n": 2,
+            "tp": 0,
+            "tn": 1,
+            "fp": 1,
+            "fn": 0,
+            "taxa_selecao": 0.5,
+            "tpr": null,
+            "fpr": 0.5,
+            "fnr": null,
+            "precisao": 0.0,
+            "acuracia": 0.5
+          }
+        ],
+        "demographic_parity_difference": 0.23411189570885388,
+        "equal_opportunity_difference": null,
+        "disparate_impact_ratio": 0.5317762085822922,
+        "false_positive_rate_difference": 0.2619820404630531,
+        "false_negative_rate_difference": null,
+        "finalidade": "diagnostico_experimental"
+      }
+    },
+    "random_forest_inadimplencia": {
+      "faixa_valor": {
+        "grupos": [
+          {
+            "grupo": "500_a_5000",
+            "n": 3409,
+            "tp": 278,
+            "tn": 1890,
+            "fp": 724,
+            "fn": 517,
+            "taxa_selecao": 0.293927838075682,
+            "tpr": 0.34968553459119495,
+            "fpr": 0.2769701606732976,
+            "fnr": 0.650314465408805,
+            "precisao": 0.2774451097804391,
+            "acuracia": 0.6359636256966853
+          },
+          {
+            "grupo": "acima_5000",
+            "n": 343,
+            "tp": 103,
+            "tn": 49,
+            "fp": 151,
+            "fn": 40,
+            "taxa_selecao": 0.7405247813411079,
+            "tpr": 0.7202797202797203,
+            "fpr": 0.755,
+            "fnr": 0.27972027972027974,
+            "precisao": 0.40551181102362205,
+            "acuracia": 0.44314868804664725
+          },
+          {
+            "grupo": "ate_500",
+            "n": 7296,
+            "tp": 0,
+            "tn": 6431,
+            "fp": 0,
+            "fn": 865,
+            "taxa_selecao": 0.0,
+            "tpr": 0.0,
+            "fpr": 0.0,
+            "fnr": 1.0,
+            "precisao": null,
+            "acuracia": 0.8814418859649122
+          }
+        ],
+        "demographic_parity_difference": 0.7405247813411079,
+        "equal_opportunity_difference": 0.7202797202797203,
+        "disparate_impact_ratio": 0.0,
+        "false_positive_rate_difference": 0.755,
+        "false_negative_rate_difference": 0.7202797202797202,
+        "finalidade": "diagnostico_experimental"
+      },
+      "faixa_idade": {
+        "grupos": [
+          {
+            "grupo": "acima_60_dias",
+            "n": 11046,
+            "tp": 381,
+            "tn": 8369,
+            "fp": 874,
+            "fn": 1422,
+            "taxa_selecao": 0.11361578852073148,
+            "tpr": 0.2113144758735441,
+            "fpr": 0.09455804392513253,
+            "fnr": 0.7886855241264559,
+            "precisao": 0.3035856573705179,
+            "acuracia": 0.7921419518377694
+          },
+          {
+            "grupo": "ate_30_dias",
+            "n": 2,
+            "tp": 0,
+            "tn": 1,
+            "fp": 1,
+            "fn": 0,
+            "taxa_selecao": 0.5,
+            "tpr": null,
+            "fpr": 0.5,
+            "fnr": null,
+            "precisao": 0.0,
+            "acuracia": 0.5
+          }
+        ],
+        "demographic_parity_difference": 0.3863842114792685,
+        "equal_opportunity_difference": null,
+        "disparate_impact_ratio": 0.22723157704146296,
+        "false_positive_rate_difference": 0.40544195607486744,
+        "false_negative_rate_difference": null,
+        "finalidade": "diagnostico_experimental"
+      }
+    },
+    "recuperabilidade_baixa": {
+      "faixa_valor": {
+        "grupos": [
+          {
+            "grupo": "500_a_5000",
+            "n": 3409,
+            "tp": 0,
+            "tn": 3409,
+            "fp": 0,
+            "fn": 0,
+            "taxa_selecao": 0.0,
+            "tpr": null,
+            "fpr": 0.0,
+            "fnr": null,
+            "precisao": null,
+            "acuracia": 1.0
+          },
+          {
+            "grupo": "acima_5000",
+            "n": 343,
+            "tp": 55,
+            "tn": 167,
+            "fp": 121,
+            "fn": 0,
+            "taxa_selecao": 0.5131195335276968,
+            "tpr": 1.0,
+            "fpr": 0.4201388888888889,
+            "fnr": 0.0,
+            "precisao": 0.3125,
+            "acuracia": 0.6472303206997084
+          },
+          {
+            "grupo": "ate_500",
+            "n": 7296,
+            "tp": 0,
+            "tn": 7296,
+            "fp": 0,
+            "fn": 0,
+            "taxa_selecao": 0.0,
+            "tpr": null,
+            "fpr": 0.0,
+            "fnr": null,
+            "precisao": null,
+            "acuracia": 1.0
+          }
+        ],
+        "demographic_parity_difference": 0.5131195335276968,
+        "equal_opportunity_difference": null,
+        "disparate_impact_ratio": 0.0,
+        "false_positive_rate_difference": 0.4201388888888889,
+        "false_negative_rate_difference": null,
+        "finalidade": "diagnostico_experimental"
+      },
+      "faixa_idade": {
+        "grupos": [
+          {
+            "grupo": "acima_60_dias",
+            "n": 11046,
+            "tp": 55,
+            "tn": 10870,
+            "fp": 121,
+            "fn": 0,
+            "taxa_selecao": 0.015933369545536848,
+            "tpr": 1.0,
+            "fpr": 0.01100900736966609,
+            "fnr": 0.0,
+            "precisao": 0.3125,
+            "acuracia": 0.9890458084374434
+          },
+          {
+            "grupo": "ate_30_dias",
+            "n": 2,
+            "tp": 0,
+            "tn": 2,
+            "fp": 0,
+            "fn": 0,
+            "taxa_selecao": 0.0,
+            "tpr": null,
+            "fpr": 0.0,
+            "fnr": null,
+            "precisao": null,
+            "acuracia": 1.0
+          }
+        ],
+        "demographic_parity_difference": 0.015933369545536848,
+        "equal_opportunity_difference": null,
+        "disparate_impact_ratio": 0.0,
+        "false_positive_rate_difference": 0.01100900736966609,
+        "false_negative_rate_difference": null,
+        "finalidade": "diagnostico_experimental"
+      }
+    },
+    "recuperabilidade_media": {
+      "faixa_valor": {
+        "grupos": [
+          {
+            "grupo": "500_a_5000",
+            "n": 3409,
+            "tp": 3409,
+            "tn": 0,
+            "fp": 0,
+            "fn": 0,
+            "taxa_selecao": 1.0,
+            "tpr": 1.0,
+            "fpr": null,
+            "fnr": 0.0,
+            "precisao": 1.0,
+            "acuracia": 1.0
+          },
+          {
+            "grupo": "acima_5000",
+            "n": 343,
+            "tp": 167,
+            "tn": 55,
+            "fp": 0,
+            "fn": 121,
+            "taxa_selecao": 0.4868804664723032,
+            "tpr": 0.5798611111111112,
+            "fpr": 0.0,
+            "fnr": 0.4201388888888889,
+            "precisao": 1.0,
+            "acuracia": 0.6472303206997084
+          },
+          {
+            "grupo": "ate_500",
+            "n": 7296,
+            "tp": 5040,
+            "tn": 1802,
+            "fp": 454,
+            "fn": 0,
+            "taxa_selecao": 0.753015350877193,
+            "tpr": 1.0,
+            "fpr": 0.20124113475177305,
+            "fnr": 0.0,
+            "precisao": 0.9173643975245722,
+            "acuracia": 0.9377741228070176
+          }
+        ],
+        "demographic_parity_difference": 0.5131195335276968,
+        "equal_opportunity_difference": 0.42013888888888884,
+        "disparate_impact_ratio": 0.4868804664723032,
+        "false_positive_rate_difference": null,
+        "false_negative_rate_difference": 0.4201388888888889,
+        "finalidade": "diagnostico_experimental"
+      },
+      "faixa_idade": {
+        "grupos": [
+          {
+            "grupo": "acima_60_dias",
+            "n": 11046,
+            "tp": 8614,
+            "tn": 1857,
+            "fp": 454,
+            "fn": 121,
+            "taxa_selecao": 0.8209306536302734,
+            "tpr": 0.9861476817401259,
+            "fpr": 0.1964517524881004,
+            "fnr": 0.013852318259874069,
+            "precisao": 0.9499338332598147,
+            "acuracia": 0.9479449574506609
+          },
+          {
+            "grupo": "ate_30_dias",
+            "n": 2,
+            "tp": 2,
+            "tn": 0,
+            "fp": 0,
+            "fn": 0,
+            "taxa_selecao": 1.0,
+            "tpr": 1.0,
+            "fpr": null,
+            "fnr": 0.0,
+            "precisao": 1.0,
+            "acuracia": 1.0
+          }
+        ],
+        "demographic_parity_difference": 0.1790693463697266,
+        "equal_opportunity_difference": 0.013852318259874097,
+        "disparate_impact_ratio": 0.8209306536302734,
+        "false_positive_rate_difference": null,
+        "false_negative_rate_difference": 0.013852318259874069,
+        "finalidade": "diagnostico_experimental"
+      }
+    },
+    "recuperabilidade_alta": {
+      "faixa_valor": {
+        "grupos": [
+          {
+            "grupo": "500_a_5000",
+            "n": 3409,
+            "tp": 0,
+            "tn": 3409,
+            "fp": 0,
+            "fn": 0,
+            "taxa_selecao": 0.0,
+            "tpr": null,
+            "fpr": 0.0,
+            "fnr": null,
+            "precisao": null,
+            "acuracia": 1.0
+          },
+          {
+            "grupo": "acima_5000",
+            "n": 343,
+            "tp": 0,
+            "tn": 343,
+            "fp": 0,
+            "fn": 0,
+            "taxa_selecao": 0.0,
+            "tpr": null,
+            "fpr": 0.0,
+            "fnr": null,
+            "precisao": null,
+            "acuracia": 1.0
+          },
+          {
+            "grupo": "ate_500",
+            "n": 7296,
+            "tp": 1802,
+            "tn": 5040,
+            "fp": 0,
+            "fn": 454,
+            "taxa_selecao": 0.24698464912280702,
+            "tpr": 0.7987588652482269,
+            "fpr": 0.0,
+            "fnr": 0.20124113475177305,
+            "precisao": 1.0,
+            "acuracia": 0.9377741228070176
+          }
+        ],
+        "demographic_parity_difference": 0.24698464912280702,
+        "equal_opportunity_difference": null,
+        "disparate_impact_ratio": 0.0,
+        "false_positive_rate_difference": 0.0,
+        "false_negative_rate_difference": null,
+        "finalidade": "diagnostico_experimental"
+      },
+      "faixa_idade": {
+        "grupos": [
+          {
+            "grupo": "acima_60_dias",
+            "n": 11046,
+            "tp": 1802,
+            "tn": 8790,
+            "fp": 0,
+            "fn": 454,
+            "taxa_selecao": 0.16313597682418976,
+            "tpr": 0.7987588652482269,
+            "fpr": 0.0,
+            "fnr": 0.20124113475177305,
+            "precisao": 1.0,
+            "acuracia": 0.9588991490132175
+          },
+          {
+            "grupo": "ate_30_dias",
+            "n": 2,
+            "tp": 0,
+            "tn": 2,
+            "fp": 0,
+            "fn": 0,
+            "taxa_selecao": 0.0,
+            "tpr": null,
+            "fpr": 0.0,
+            "fnr": null,
+            "precisao": null,
+            "acuracia": 1.0
+          }
+        ],
+        "demographic_parity_difference": 0.16313597682418976,
+        "equal_opportunity_difference": null,
+        "disparate_impact_ratio": 0.0,
+        "false_positive_rate_difference": 0.0,
+        "false_negative_rate_difference": null,
+        "finalidade": "diagnostico_experimental"
+      }
+    }
+  }
+}
