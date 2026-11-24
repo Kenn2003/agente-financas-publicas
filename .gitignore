@@ -34,3 +34,4 @@ logs/*.json
 data/raw/
 data/processed/
 data/ready/
+.coverage

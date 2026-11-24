@@ -8,6 +8,9 @@ from google.genai import types
 import time
 from google.genai import errors
 
+from src.governance.controle_cobranca import (
+    verificar_protecao_iptu_social
+)
 from src.agents.prompts_orchestrador import (
     PROMPT_ROTEAMENTO,
     PROMPT_SINTESE,
@@ -30,6 +33,7 @@ class Orquestrador:
         "despesas",
         "licitacoes",
         "contratos",
+        "divida_ativa",
         )
 
     def __init__(self):
@@ -323,6 +327,25 @@ class Orquestrador:
             )
 
 
+        governanca = None
+
+        if "divida_ativa" in selecionados:
+
+            governanca = verificar_protecao_iptu_social(
+                2026
+            )
+
+            resposta_final += (
+                "\n\n**Governança — IPTU Social**\n"
+                "- Decisão: revisão humana.\n"
+                "- Cobrança individualizada: não autorizada.\n"
+                "- Situação cadastral: não verificada.\n"
+                "- Os resultados possuem finalidade analítica.\n"
+                "- Indicadores territoriais não comprovam "
+                "elegibilidade individual."
+            )
+
+
         if falhas:
             resposta_final += (
                 "\n\nConsulta parcial. Não foi possível "
@@ -337,4 +360,5 @@ class Orquestrador:
             ),
             "agentes_acionados": selecionados,
             "resposta": resposta_final,
+            "governanca": governanca
         }

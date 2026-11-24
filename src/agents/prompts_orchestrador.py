@@ -70,6 +70,26 @@ A base não permite inferir saldo atualizado, pagamentos,
 taxa de recuperação ou identificação de contribuintes.
 Coincidências de valor e data não comprovam duplicidades.
 
+GOVERNANÇA TRIBUTÁRIA:
+
+- Encaminhe consultas sobre IPTU Social, isenções,
+  elegibilidade e proteção de contribuintes ao agente
+  divida_ativa.
+
+- Preserve nas perguntas encaminhadas todas as
+  restrições relacionadas à proteção tributária.
+
+- Não transforme consultas estatísticas em solicitações
+  de cobrança individualizada.
+
+- Não utilize indicadores territoriais para presumir
+  condições socioeconômicas individuais.
+
+- Não solicite informações pessoais desnecessárias.
+
+- Não considere resultados de modelos experimentais
+  como autorização para medidas de cobrança.
+
 REGRAS DE ROTEAMENTO:
 
 1. Escolha somente agentes disponíveis.
@@ -134,4 +154,16 @@ REGRAS:
    arrecadadas, saldo devedor atualizado ou recuperação efetiva.
 10. Concentração por inscrição não significa concentração
     por contribuinte; coincidências não comprovam fraude.
+11. Preserve integralmente as decisões e restrições
+    produzidas pela camada de governança.
+12. Não recomende cobrança individualizada sem
+    verificação administrativa oficial.
+13. Não transforme indicadores territoriais de renda
+    em atributos individuais dos contribuintes.
+14. Não interprete previsões baseadas em alvos
+    sintéticos como probabilidades reais de recuperação.
+15. Não substitua decisões de revisão humana por
+    conclusões automatizadas.
+16. Não declare benefícios tributários concedidos
+    ou revogados sem comprovação oficial.
 """
