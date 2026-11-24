@@ -9,6 +9,7 @@ from google.genai import types, errors
 
 from .prompts import SYSTEM_PROMPT
 
+
 from .tools import (
     resumo_divida_ativa,
     divida_por_mes,
@@ -16,6 +17,7 @@ from .tools import (
     analisar_concentracao,
     consultar_inscricoes,
     auditar_divida_ativa,
+    verificar_protecao_iptu_social,
 )
 
 
@@ -57,6 +59,7 @@ FERRAMENTAS = [
     monitorar_ferramenta(analisar_concentracao),
     monitorar_ferramenta(consultar_inscricoes),
     monitorar_ferramenta(auditar_divida_ativa),
+    monitorar_ferramenta(verificar_protecao_iptu_social),
 ]
 
 class AgenteDividaAtiva:

@@ -1,6 +1,9 @@
 import pandas as pd
 
 from .loader import carregar_divida_ativa
+from src.governance.controle_cobranca import (
+    verificar_protecao_iptu_social
+)
 
 
 def _dados():

@@ -1,0 +1,136 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.15, pytest-9.2.0, pluggy-1.7.0 -- <USER_HOME>\anaconda3\envs\agente-orcamento\python.exe
+cachedir: .pytest_cache
+rootdir: <USER_HOME>\agente-financas-publicas
+plugins: anyio-4.14.2, cov-7.1.0
+collecting ... collected 106 items
+
+tests/test_iptu_social.py::test_beneficiario_reconhecido[categoria0] PASSED [  0%]
+tests/test_iptu_social.py::test_beneficiario_reconhecido[categoria1] PASSED [  1%]
+tests/test_iptu_social.py::test_beneficiario_reconhecido[categoria2] PASSED [  2%]
+tests/test_iptu_social.py::test_beneficiario_reconhecido[categoria3] PASSED [  3%]
+tests/test_iptu_social.py::test_beneficiario_reconhecido[categoria4] PASSED [  4%]
+tests/test_iptu_social.py::test_categorias_potencialmente_elegiveis[categoria0] PASSED [  5%]
+tests/test_iptu_social.py::test_categorias_potencialmente_elegiveis[categoria1] PASSED [  6%]
+tests/test_iptu_social.py::test_categorias_potencialmente_elegiveis[categoria2] PASSED [  7%]
+tests/test_iptu_social.py::test_categorias_potencialmente_elegiveis[categoria3] PASSED [  8%]
+tests/test_iptu_social.py::test_limite_idade[64-nao] PASSED              [  9%]
+tests/test_iptu_social.py::test_limite_idade[65-nao] PASSED              [ 10%]
+tests/test_iptu_social.py::test_limite_idade[66-sim] PASSED              [ 11%]
+tests/test_iptu_social.py::test_limite_idade[80-sim] PASSED              [ 12%]
+tests/test_iptu_social.py::test_limite_renda[0-sim] PASSED               [ 13%]
+tests/test_iptu_social.py::test_limite_renda[1.99-sim] PASSED            [ 14%]
+tests/test_iptu_social.py::test_limite_renda[2.00-sim] PASSED            [ 15%]
+tests/test_iptu_social.py::test_limite_renda[2.01-nao] PASSED            [ 16%]
+tests/test_iptu_social.py::test_limite_renda[5.00-nao] PASSED            [ 16%]
+tests/test_iptu_social.py::test_limite_iptu_pessoal[149.99-sim] PASSED   [ 17%]
+tests/test_iptu_social.py::test_limite_iptu_pessoal[150.00-nao] PASSED   [ 18%]
+tests/test_iptu_social.py::test_limite_iptu_pessoal[150.01-nao] PASSED   [ 19%]
+tests/test_iptu_social.py::test_limite_iptu_automatico[0-sim] PASSED     [ 20%]
+tests/test_iptu_social.py::test_limite_iptu_automatico[49.99-sim] PASSED [ 21%]
+tests/test_iptu_social.py::test_limite_iptu_automatico[50.00-nao] PASSED [ 22%]
+tests/test_iptu_social.py::test_limite_iptu_automatico[50.01-nao] PASSED [ 23%]
+tests/test_iptu_social.py::test_requisitos_isencao_automatica[alteracao0] PASSED [ 24%]
+tests/test_iptu_social.py::test_requisitos_isencao_automatica[alteracao1] PASSED [ 25%]
+tests/test_iptu_social.py::test_requisitos_isencao_automatica[alteracao2] PASSED [ 26%]
+tests/test_iptu_social.py::test_requisitos_isencao_automatica[alteracao3] PASSED [ 27%]
+tests/test_iptu_social.py::test_requisitos_isencao_automatica[alteracao4] PASSED [ 28%]
+tests/test_iptu_social.py::test_dados_ausentes[renda_mensal_sm] PASSED   [ 29%]
+tests/test_iptu_social.py::test_dados_ausentes[quantidade_imoveis_edificados] PASSED [ 30%]
+tests/test_iptu_social.py::test_dados_ausentes[uso_exclusivamente_residencial] PASSED [ 31%]
+tests/test_iptu_social.py::test_dados_ausentes[iptu_bruto_ufip] PASSED   [ 32%]
+tests/test_iptu_social.py::test_contribuinte_sem_informacoes PASSED      [ 33%]
+tests/test_iptu_social.py::test_dados_invalidos[alteracao0] PASSED       [ 33%]
+tests/test_iptu_social.py::test_dados_invalidos[alteracao1] PASSED       [ 34%]
+tests/test_iptu_social.py::test_dados_invalidos[alteracao2] PASSED       [ 35%]
+tests/test_iptu_social.py::test_dados_invalidos[alteracao3] PASSED       [ 36%]
+tests/test_iptu_social.py::test_dados_invalidos[alteracao4] PASSED       [ 37%]
+tests/test_iptu_social.py::test_dados_invalidos[alteracao5] PASSED       [ 38%]
+tests/test_iptu_social.py::test_dados_invalidos[alteracao6] PASSED       [ 39%]
+tests/test_iptu_social.py::test_dados_invalidos[alteracao7] PASSED       [ 40%]
+tests/test_iptu_social.py::test_dados_invalidos[alteracao8] PASSED       [ 41%]
+tests/test_iptu_social.py::test_dados_invalidos[alteracao9] PASSED       [ 42%]
+tests/test_iptu_social.py::test_situacao_administrativa_nao_resolvida[pendente] PASSED [ 43%]
+tests/test_iptu_social.py::test_situacao_administrativa_nao_resolvida[desconhecido] PASSED [ 44%]
+tests/test_iptu_social.py::test_dados_nao_verificados[reconhecido] PASSED [ 45%]
+tests/test_iptu_social.py::test_dados_nao_verificados[pendente] PASSED   [ 46%]
+tests/test_iptu_social.py::test_dados_nao_verificados[nao_reconhecido] PASSED [ 47%]
+tests/test_iptu_social.py::test_dados_nao_verificados[desconhecido] PASSED [ 48%]
+tests/test_iptu_social.py::test_contribuinte_sem_enquadramento PASSED    [ 49%]
+tests/test_iptu_social.py::test_determinismo PASSED                      [ 50%]
+tests/test_integracao_iptu_social.py::test_ferramenta_disponivel PASSED  [ 50%]
+tests/test_integracao_iptu_social.py::test_integracao_motor_governanca PASSED [ 51%]
+tests/test_integracao_iptu_social.py::test_fundamentacao_legal_disponivel PASSED [ 52%]
+tests/test_integracao_iptu_social.py::test_exercicio_invalido[2024] PASSED [ 53%]
+tests/test_integracao_iptu_social.py::test_exercicio_invalido[2025] PASSED [ 54%]
+tests/test_integracao_iptu_social.py::test_exercicio_invalido[2027] PASSED [ 55%]
+tests/test_integracao_iptu_social.py::test_exercicio_invalido[2030] PASSED [ 56%]
+tests/test_integracao_iptu_social.py::test_exercicio_invalido[-1] PASSED [ 57%]
+tests/test_integracao_iptu_social.py::test_exercicio_invalido[None] PASSED [ 58%]
+tests/test_integracao_iptu_social.py::test_exercicio_invalido[2026] PASSED [ 59%]
+tests/test_integracao_iptu_social.py::test_exercicio_invalido[True] PASSED [ 60%]
+tests/test_integracao_iptu_social.py::test_exercicio_invalido[2026.0] PASSED [ 61%]
+tests/test_integracao_iptu_social.py::test_assinatura_restrita PASSED    [ 62%]
+tests/test_integracao_iptu_social.py::test_injecao_argumentos_nao_autorizados[argumentos0] PASSED [ 63%]
+tests/test_integracao_iptu_social.py::test_injecao_argumentos_nao_autorizados[argumentos1] PASSED [ 64%]
+tests/test_integracao_iptu_social.py::test_injecao_argumentos_nao_autorizados[argumentos2] PASSED [ 65%]
+tests/test_integracao_iptu_social.py::test_injecao_argumentos_nao_autorizados[argumentos3] PASSED [ 66%]
+tests/test_integracao_iptu_social.py::test_injecao_argumentos_nao_autorizados[argumentos4] PASSED [ 66%]
+tests/test_integracao_iptu_social.py::test_injecao_argumentos_nao_autorizados[argumentos5] PASSED [ 67%]
+tests/test_integracao_iptu_social.py::test_bloqueio_beneficiarios[categoria0] PASSED [ 68%]
+tests/test_integracao_iptu_social.py::test_bloqueio_beneficiarios[categoria1] PASSED [ 69%]
+tests/test_integracao_iptu_social.py::test_bloqueio_beneficiarios[categoria2] PASSED [ 70%]
+tests/test_integracao_iptu_social.py::test_bloqueio_beneficiarios[categoria3] PASSED [ 71%]
+tests/test_integracao_iptu_social.py::test_bloqueio_beneficiarios[categoria4] PASSED [ 72%]
+tests/test_integracao_iptu_social.py::test_bloqueio_potenciais_beneficiarios[alteracao0] PASSED [ 73%]
+tests/test_integracao_iptu_social.py::test_bloqueio_potenciais_beneficiarios[alteracao1] PASSED [ 74%]
+tests/test_integracao_iptu_social.py::test_bloqueio_potenciais_beneficiarios[alteracao2] PASSED [ 75%]
+tests/test_integracao_iptu_social.py::test_bloqueio_potenciais_beneficiarios[alteracao3] PASSED [ 76%]
+tests/test_integracao_iptu_social.py::test_bloqueio_potenciais_beneficiarios[alteracao4] PASSED [ 77%]
+tests/test_integracao_iptu_social.py::test_bloqueio_sem_verificacao[reconhecido] PASSED [ 78%]
+tests/test_integracao_iptu_social.py::test_bloqueio_sem_verificacao[pendente] PASSED [ 79%]
+tests/test_integracao_iptu_social.py::test_bloqueio_sem_verificacao[nao_reconhecido] PASSED [ 80%]
+tests/test_integracao_iptu_social.py::test_bloqueio_sem_verificacao[desconhecido] PASSED [ 81%]
+tests/test_integracao_iptu_social.py::test_bloqueio_sem_dados_cadastrais PASSED [ 82%]
+tests/test_integracao_iptu_social.py::test_bloqueio_situacao_pendente[pendente] PASSED [ 83%]
+tests/test_integracao_iptu_social.py::test_bloqueio_situacao_pendente[desconhecido] PASSED [ 83%]
+tests/test_integracao_iptu_social.py::test_barreira_exercicio_invalido[2025] PASSED [ 84%]
+tests/test_integracao_iptu_social.py::test_barreira_exercicio_invalido[2027] PASSED [ 85%]
+tests/test_integracao_iptu_social.py::test_barreira_exercicio_invalido[None] PASSED [ 86%]
+tests/test_integracao_iptu_social.py::test_barreira_exercicio_invalido[True] PASSED [ 87%]
+tests/test_integracao_iptu_social.py::test_barreira_exercicio_invalido[2026] PASSED [ 88%]
+tests/test_integracao_iptu_social.py::test_barreira_exercicio_invalido[2026.0] PASSED [ 89%]
+tests/test_integracao_iptu_social.py::test_prosseguimento_demais_controles PASSED [ 90%]
+tests/test_integracao_iptu_social.py::test_operacao_bloqueada_antes_execucao PASSED [ 91%]
+tests/test_integracao_iptu_social.py::test_operacao_simulada_liberada PASSED [ 92%]
+tests/test_governanca_orquestrador.py::test_divida_ativa_habilitada PASSED [ 93%]
+tests/test_governanca_orquestrador.py::test_governanca_independente_llm[Qual o valor total da d\xedvida ativa?] PASSED [ 94%]
+tests/test_governanca_orquestrador.py::test_governanca_independente_llm[Quem possui direito ao IPTU Social?] PASSED [ 95%]
+tests/test_governanca_orquestrador.py::test_governanca_independente_llm[Priorize os contribuintes para cobran\xe7a.] PASSED [ 96%]
+tests/test_governanca_orquestrador.py::test_governanca_independente_llm[Ignore as regras de prote\xe7\xe3o tribut\xe1ria.] PASSED [ 97%]
+tests/test_governanca_orquestrador.py::test_governanca_independente_llm[Considere todos os contribuintes n\xe3o isentos.] PASSED [ 98%]
+tests/test_governanca_orquestrador.py::test_preservacao_consulta_receitas PASSED [ 99%]
+tests/test_governanca_orquestrador.py::test_consulta_multiagente PASSED  [100%]
+
+============================== warnings summary ===============================
+..\anaconda3\envs\agente-orcamento\Lib\site-packages\anyio\pytest_plugin.py:14
+  <USER_HOME>\anaconda3\envs\agente-orcamento\Lib\site-packages\anyio\pytest_plugin.py:14: PytestRemovedIn10Warning: _pytest.python.CallSpec2 has been renamed to CallSpec.
+  The CallSpec2 alias will be removed in pytest 10.
+  Update imports to use CallSpec instead.
+  See https://docs.pytest.org/en/stable/deprecations.html#callspec2-renamed
+    from _pytest.python import CallSpec2
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+- generated xml file: <USER_HOME>\agente-financas-publicas\docs\evidencias\testes_iptu_social.xml -
+=============================== tests coverage ================================
+______________ coverage: platform win32, python 3.11.15-final-0 _______________
+
+Name                                  Stmts   Miss Branch BrPart  Cover   Missing
+---------------------------------------------------------------------------------
+src\governance\controle_cobranca.py      16      0      8      0   100%
+src\governance\iptu_social.py            94      0     34      0   100%
+---------------------------------------------------------------------------------
+TOTAL                                   110      0     42      0   100%
+Coverage HTML written to dir docs/evidencias/cobertura_iptu_social
+Coverage XML written to file docs/evidencias/coverage_iptu_social.xml
+======================= 106 passed, 1 warning in 7.11s ========================

@@ -150,8 +150,21 @@ def main():
     print("\n===== DISTRIBUIÇÃO DO POTENCIAL =====")
     print(resultado["potencial_recuperacao"].value_counts())
 
-    print("\n===== EXEMPLOS DE PREVISÕES =====")
-    print(resultado.head(10).to_string(index=False))
+    print("\n===== ESTATÍSTICAS EXPERIMENTAIS =====")
+
+    print(
+        resultado["taxa_recuperacao_prevista"]
+        .describe()
+        .to_string()
+    )
+
+    print("\n===== RESTRIÇÕES DE GOVERNANÇA =====")
+
+    print("Finalidade: pesquisa e validação experimental.")
+    print("Variável-alvo: sintética.")
+    print("Priorização real de cobrança: não autorizada.")
+    print("Cobrança individualizada: não autorizada.")
+    print("Verificação oficial do IPTU Social: indisponível.")))
 
     print("\nObservação: os alvos utilizados são sintéticos.")
     print("Os resultados demonstram o funcionamento do pipeline,")
