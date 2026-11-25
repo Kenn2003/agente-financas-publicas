@@ -1,0 +1,45 @@
+{
+  "evidencia": "registro_teste_anonimizado_001",
+  "natureza_registro": "Registro real da base, utilizado sem identificadores pessoais.",
+  "features_entrada": {
+    "log_valor_divida": 6.2088,
+    "idade_divida_dias": 83
+  },
+  "inadimplencia_proxy": {
+    "modelo": "RandomForestClassifier",
+    "classe_prevista": 0,
+    "probabilidades": {
+      "classe_0": 0.652482,
+      "classe_1": 0.347518
+    },
+    "feature_importance_global": {
+      "log_valor_divida": 0.901347,
+      "idade_divida_dias": 0.098653
+    },
+    "target_status": "sintetico_proxy_nao_observado"
+  },
+  "recuperabilidade_proxy": {
+    "modelo": "RandomForestClassifier",
+    "classe_prevista": "media",
+    "probabilidades": {
+      "alta": 0.006172,
+      "baixa": 0.006843,
+      "media": 0.986985
+    },
+    "feature_importance_global": {
+      "log_valor_divida": 0.737512,
+      "idade_divida_dias": 0.262488
+    },
+    "target_status": "sintetico_proxy_nao_observado"
+  },
+  "governanca": {
+    "aviso_modelo": "Não usar para decisões reais: a base não contém rótulos observados de pagamento, inadimplência ou recuperação.",
+    "interpretacao_feature_importance": "Feature Importance representa relevância global das variáveis no modelo e não a contribuição causal ou local de cada variável para esta previsão.",
+    "uso_operacional_autorizado": false
+  },
+  "reprodutibilidade": {
+    "data_referencia": "2026-10-01",
+    "fim_validacao": "2026-06-30",
+    "python_sklearn": "1.8.0"
+  }
+}
