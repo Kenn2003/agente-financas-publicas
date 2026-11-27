@@ -330,3 +330,50 @@
   .chat-compose-footer { align-items: flex-start; flex-direction: column; }
   .chat-actions { width: 100%; }
 }
+
+/* Superfícies, hierarquia e conteúdo progressivo do FinPalmas. */
+.exec-heading { border-left: 2px solid var(--acento); padding-left: 18px; }
+.exec-eyebrow { color: var(--texto-3); }
+.exec-title { color: var(--acento); font-weight: 570; letter-spacing: -.055em; }
+.exec-subtitle { color: #a9ada5; }
+.cabecalho h1 { color: var(--acento); font-weight: 570; }
+.cabecalho p { color: #a9ada5; }
+.exec-panel, .cartao { border-color: #262a24; border-radius: 16px; background: linear-gradient(145deg, #141613, #10120f 68%); box-shadow: 0 18px 40px rgba(0,0,0,.22); }
+.exec-panel:hover, .cartao:hover { border-color: #34392f; background: #141613; }
+.exec-section-title { align-items: center; margin-bottom: 14px; }
+.exec-section-heading { display: flex; width: 100%; min-width: 0; align-items: center; gap: 10px; }
+.exec-section-heading h2, .exec-section-title h2 { margin: 0; color: var(--texto); font-size: 1.06rem; font-weight: 620; letter-spacing: -.025em; }
+.section-info { position: relative; flex: none; }
+.section-info > summary { display: grid; width: 21px; height: 21px; place-items: center; border: 1px solid #42463e; border-radius: 50%; color: #a9ada5; font-family: Georgia, serif; font-size: .77rem; font-style: italic; cursor: pointer; list-style: none; transition: border-color var(--t), color var(--t), background var(--t); }
+.section-info > summary::-webkit-details-marker { display: none; }
+.section-info > summary:hover, .section-info[open] > summary { border-color: var(--acento); color: var(--acento); background: rgba(184,233,11,.08); }
+.section-info-copy { position: absolute; top: calc(100% + 9px); left: 0; z-index: 25; width: min(330px, 76vw); padding: 12px 14px; border: 1px solid #33372e; border-radius: 9px; color: #b3b7ae; background: #10120f; box-shadow: 0 12px 35px rgba(0,0,0,.6); font-size: .74rem; line-height: 1.55; }
+.method-note-disclosure { margin-top: 10px; padding: 0; border: 1px solid transparent; border-radius: 8px; }
+.method-note-disclosure[open] { padding: 9px 11px; border-color: #272b25; background: rgba(8,9,8,.4); }
+.method-note-summary { display: flex; width: fit-content; align-items: center; gap: 7px; color: #83887f; font-size: .68rem; cursor: pointer; list-style: none; transition: color var(--t); }
+.method-note-summary::-webkit-details-marker { display: none; }
+.method-note-summary::before { display: inline-block; width: 6px; height: 6px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; content: ""; transform: rotate(-45deg); transition: transform var(--t); }
+.method-note-disclosure[open] > .method-note-summary::before { transform: rotate(45deg); }
+.method-note-summary:hover, .method-note-disclosure[open] > .method-note-summary { color: var(--acento); }
+.method-note-disclosure .exec-method-note, .method-note-disclosure .exec-footer-note { display: block; margin: 9px 0 0; padding: 0; border: 0; color: #898e85; font-size: .7rem; line-height: 1.6; }
+.exec-status { padding: 10px 14px; border-color: #282c26; border-radius: 11px; background: #141613; font-size: .77rem; }
+.exec-badge { color: #b9c0af; background: #20231e; border-color: #32372d; }
+.exec-kpi-card { border-color: #242821; border-radius: 14px; background: #0b0c0b; }
+.exec-kpi-card::before { width: 0; }
+.exec-kpi-label { color: #c2c5bf; font-weight: 520; }
+.exec-kpi-value { color: var(--acento); font-weight: 520; }
+.exec-kpi-detail { color: #858a81; }
+.exec-chart-card { border-color: #242821; border-radius: 13px; background: #0d0f0d; }
+.page-map-image { background: #0b0d0b; }
+.page-map-card, .ml-diagnostic-block, .ml-result-card, .page-explainer, .map-workspace, .map-inspector { border-color: #282c26; border-radius: 13px; }
+.page-explainer, .ml-diagnostic-block { background: #111310; }
+.page-explainer-highlight { background: rgba(184,233,11,.08); }
+.page-button { border-color: var(--acento); color: #080a04; background: var(--acento); }
+.page-button:hover { border-color: var(--acento-hover); background: var(--acento-hover); }
+.selo { border-radius: 999px; }
+
+@media (max-width: 620px) {
+  .exec-section-heading { align-items: flex-start; }
+  .section-info-copy { left: -8px; }
+  .method-note-disclosure { margin-top: 7px; }
+}

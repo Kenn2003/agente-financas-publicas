@@ -3,6 +3,8 @@ import dash
 from dash import Input, Output, callback, dcc, html
 import plotly.graph_objects as go
 
+from dash_app.components.base import titulo_secao
+
 from dash_app.services.dados import (
     agregar_despesas_anuais,
     agregar_receitas,
@@ -24,12 +26,12 @@ MESES = {
 }
 
 CORES = {
-    "azul": "#C5E86C",         # destaque principal (verde-lima institucional)
-    "azul_escuro": "#101210",
-    "verde": "#D8DED5",        # série neutra clara
-    "ambar": "#8CA7B6",        # série secundária (azul-aço)
-    "texto": "#B3B9B0",
-    "grade": "#303630",
+    "azul": "#B8E90B",         # destaque verde-lima da marca
+    "azul_escuro": "#0B0C0B",
+    "verde": "#C9CCC5",        # série neutra clara
+    "ambar": "#9B9F97",        # série secundária neutra
+    "texto": "#B6B9B1",
+    "grade": "#292D27",
 }
 
 
@@ -85,7 +87,7 @@ def _figura_vazia(mensagem):
         text=mensagem,
         x=0.5, y=0.5, xref="paper", yref="paper",
         showarrow=False,
-        font={"size": 14, "color": "#89918A"},
+        font={"size": 14, "color": "#7C8178"},
     )
     figura.update_layout(
         height=300,
@@ -108,8 +110,8 @@ def _grafico_layout(figura):
         plot_bgcolor="rgba(0,0,0,0)",
         font={"family": "Inter, Segoe UI, Arial, sans-serif", "color": CORES["texto"], "size": 12},
         hoverlabel={
-            "bgcolor": "#202520", "bordercolor": "#3A4339",
-            "font": {"color": "#F1F3ED", "size": 13},
+            "bgcolor": "#20231F", "bordercolor": "#35392F",
+            "font": {"color": "#F3F4EF", "size": 13},
         },
         legend={"font": {"color": CORES["texto"]}},
     )
@@ -164,7 +166,7 @@ def layout():
                     html.Div(
                         [
                             html.Div(
-                                [html.H2("Arrecadação registrada"), html.P("Soma exploratória dos códigos agregados documentados no dashboard atual.")],
+                                [titulo_secao("Arrecadação registrada", "Soma exploratória dos códigos agregados documentados no dashboard atual.")],
                                 className="exec-section-title",
                             ),
                             html.Div(
@@ -198,9 +200,12 @@ def layout():
                                 ],
                                 className="exec-chart-card",
                             ),
-                            html.P(
-                                "Critério: soma de valor_arrecado_mes para os códigos 1.0.0.0.00.0.0, 2.0.0.0.00.0.0, 7.0.0.0.00.0.0 e 8.0.0.0.00.0.0. A série não representa validação ou conciliação oficial.",
-                                className="exec-method-note",
+                            html.Details(
+                                [
+                                    html.Summary("Critério de cálculo", className="method-note-summary"),
+                                    html.P("Soma de valor_arrecado_mes para os códigos 1.0.0.0.00.0.0, 2.0.0.0.00.0.0, 7.0.0.0.00.0.0 e 8.0.0.0.00.0.0. A série não representa validação ou conciliação oficial.", className="exec-method-note"),
+                                ],
+                                className="method-note-disclosure",
                             ),
                         ],
                         className="exec-panel",
@@ -213,7 +218,7 @@ def layout():
                     html.Div(
                         [
                             html.Div(
-                                [html.H2("Despesas · execução registrada"), html.P("Empenhado, liquidado e pago são apresentados separadamente; não são saldo fiscal conciliado.")],
+                                [titulo_secao("Despesas · execução registrada", "Empenhado, liquidado e pago são apresentados separadamente; não são saldo fiscal conciliado.")],
                                 className="exec-section-title",
                             ),
                             html.Div(
@@ -244,9 +249,12 @@ def layout():
                                 ],
                                 className="exec-chart-card",
                             ),
-                            html.P(
-                                "Somas diretas dos registros; valores negativos são preservados. A série não deve ser interpretada como balanço orçamentário conciliado nem comparada diretamente às receitas.",
-                                className="exec-method-note",
+                            html.Details(
+                                [
+                                    html.Summary("Critérios e interpretação", className="method-note-summary"),
+                                    html.P("Somas diretas dos registros; valores negativos são preservados. A série não deve ser interpretada como balanço orçamentário conciliado nem comparada diretamente às receitas.", className="exec-method-note"),
+                                ],
+                                className="method-note-disclosure",
                             ),
                         ],
                         className="exec-panel",
@@ -254,9 +262,12 @@ def layout():
                 ],
                 className="exec-section",
             ),
-            html.Footer(
-                "Esta tela não apresenta previsão nem recomendação automatizada. Qualquer indicador derivado deve ser validado pela área responsável antes de apoiar uma decisão.",
-                className="exec-footer-note",
+            html.Details(
+                [
+                    html.Summary("Limites de uso", className="method-note-summary"),
+                    html.Footer("Esta tela não apresenta previsão nem recomendação automatizada. Qualquer indicador derivado deve ser validado pela área responsável antes de apoiar uma decisão.", className="exec-footer-note"),
+                ],
+                className="method-note-disclosure",
             ),
         ],
         className="exec-dashboard",

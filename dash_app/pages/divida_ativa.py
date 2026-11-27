@@ -45,9 +45,11 @@ def _figura_matriz(matriz, classes, titulo):
         hovertemplate="Real: %{y}<br>Previsto: %{x}<br>Registros: %{z}<extra></extra>",
     ))
     aplicar_layout(fig, altura=250)
-    fig.update_layout(title={"text": titulo, "x": .02, "font": {"size": 12}}, margin={"l": 48, "r": 12, "t": 42, "b": 36})
-    fig.update_xaxes(title="Previsto", side="bottom")
-    fig.update_yaxes(title="Real", autorange="reversed")
+    fig.update_layout(title={"text": titulo, "x": .02, "font": {"size": 12}}, margin={"l": 42, "r": 12, "t": 42, "b": 32})
+    # A explicação acima dos gráficos já informa o sentido dos eixos; retirar
+    # títulos verticais evita que eles invadam as matrizes em cards estreitos.
+    fig.update_xaxes(title=None, side="bottom", tickfont={"size": 10})
+    fig.update_yaxes(title=None, autorange="reversed", tickfont={"size": 10})
     return fig
 
 
@@ -61,13 +63,22 @@ def _figura_importancias(importancias):
         valores = importancias.get(chave, {})
         fig.add_bar(
             name=rotulo,
-            x=[nomes.get(feature, feature) for feature in valores],
-            y=[100 * valor for valor in valores.values()],
+            y=[nomes.get(feature, feature) for feature in valores],
+            x=[100 * valor for valor in valores.values()],
             marker_color=cor,
-            hovertemplate="%{x}<br>Importância global: %{y:.1f}%<extra></extra>",
+            orientation="h",
+            hovertemplate="%{y}<br>Importância global: %{x:.1f}%<extra></extra>",
         )
-    aplicar_layout(fig, altura=300)
-    fig.update_layout(barmode="group", yaxis_title="Importância global (%)", legend={"orientation": "h", "y": 1.12, "x": 0})
+    aplicar_layout(fig, altura=320)
+    fig.update_layout(
+        barmode="group",
+        margin={"l": 112, "r": 16, "t": 48, "b": 30},
+        xaxis_title=None,
+        yaxis_title=None,
+        legend={"orientation": "h", "y": 1.16, "x": 0, "font": {"size": 10}},
+    )
+    fig.update_xaxes(range=[0, 100], dtick=50, tickfont={"size": 9}, ticksuffix="%")
+    fig.update_yaxes(autorange="reversed", tickfont={"size": 10})
     return fig
 
 
@@ -111,6 +122,7 @@ def _conteudo_diagnosticos(diagnosticos):
             graficos_validacao.append(dcc.Graph(
                 figure=_figura_matriz(matriz, ["Classe 0", "Classe 1"], nome),
                 config={"displayModeBar": False, "responsive": True},
+                style={"height": "250px", "minWidth": 0},
             ))
 
     teste_inad = diagnosticos.get("inadimplencia_teste", {})
@@ -126,6 +138,7 @@ def _conteudo_diagnosticos(diagnosticos):
             dcc.Graph(
                 figure=_figura_matriz(teste_inad.get("matriz_confusao_0_1", [[0, 0], [0, 0]]), ["Classe 0", "Classe 1"], "Matriz no teste · inadimplência proxy"),
                 config={"displayModeBar": False, "responsive": True},
+                style={"height": "250px", "minWidth": 0},
             ),
         ], className="ml-test-card"),
         html.Div([
@@ -134,6 +147,7 @@ def _conteudo_diagnosticos(diagnosticos):
             dcc.Graph(
                 figure=_figura_matriz(matriz_rec or [[0, 0, 0]] * 3, ["Baixa", "Média", "Alta"], "Matriz no teste · recuperabilidade"),
                 config={"displayModeBar": False, "responsive": True},
+                style={"height": "250px", "minWidth": 0},
             ),
         ], className="ml-test-card"),
     ]
@@ -147,7 +161,7 @@ def _conteudo_diagnosticos(diagnosticos):
             html.Div([html.H3("Comparação na validação temporal"), html.P("Os três classificadores foram avaliados na mesma partição de validação."), _tabela_metricas(metricas)], className="ml-diagnostic-block"),
             html.Div([html.H3("Matrizes de confusão · validação"), html.P("Linhas = classe sintética real; colunas = classe prevista."), html.Div(graficos_validacao, className="ml-confusion-grid")], className="ml-diagnostic-block"),
             html.Div([html.H3("Avaliação no teste reservado"), html.P("O conjunto temporal de teste não participou do ajuste. Esses valores continuam sendo apenas sobre alvos sintéticos."), html.Div(teste_cards, className="ml-test-grid")], className="ml-diagnostic-block"),
-            html.Div([html.H3("Importância global das variáveis"), html.P("Relevância no modelo Random Forest; não representa causa nem explica isoladamente um cenário individual."), dcc.Graph(figure=_figura_importancias(diagnosticos["importancias"]), config={"displayModeBar": False, "responsive": True})], className="ml-diagnostic-block"),
+            html.Div([html.H3("Importância global das variáveis"), html.P("Relevância no modelo Random Forest; não representa causa nem explica isoladamente um cenário individual."), dcc.Graph(figure=_figura_importancias(diagnosticos["importancias"]), config={"displayModeBar": False, "responsive": True}, style={"height": "320px", "minWidth": 0})], className="ml-diagnostic-block"),
         ], className="ml-diagnostics-content"),
     ], className="ml-diagnostics")
 

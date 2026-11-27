@@ -2,6 +2,22 @@
 from dash import html
 
 
+def titulo_secao(titulo, descricao=""):
+    return html.Div(
+        [
+            html.H2(titulo),
+            html.Details(
+                [
+                    html.Summary("i", title="Mais informações", **{"aria-label": f"Mais informações sobre {titulo}"}),
+                    html.Div(descricao, className="section-info-copy"),
+                ],
+                className="section-info",
+            ),
+        ],
+        className="exec-section-heading",
+    )
+
+
 def cabecalho(titulo, subtitulo="", eyebrow="INTELIGÊNCIA FISCAL · PALMAS/TO"):
     return html.Div(
         [
@@ -22,7 +38,7 @@ def selo(tipo):
 def painel(titulo, descricao, conteudo, class_name=""):
     return html.Section(
         [
-            html.Div([html.H2(titulo), html.P(descricao)], className="exec-section-title"),
+            html.Div([titulo_secao(titulo, descricao)], className="exec-section-title"),
             conteudo,
         ],
         className=f"exec-panel page-panel {class_name}".strip(),
@@ -49,8 +65,20 @@ def estado(titulo, mensagem, tipo="info", acao=None):
 
 
 def nota(mensagem, tipo=""):
-    return html.P(mensagem, className=f"exec-method-note {tipo}".strip())
+    return html.Details(
+        [
+            html.Summary("Critérios e observações", className="method-note-summary"),
+            html.P(mensagem, className=f"exec-method-note {tipo}".strip()),
+        ],
+        className="method-note-disclosure",
+    )
 
 
 def rodape(mensagem):
-    return html.Footer(mensagem, className="exec-footer-note")
+    return html.Details(
+        [
+            html.Summary("Limites e cobertura dos dados", className="method-note-summary"),
+            html.Footer(mensagem, className="exec-footer-note"),
+        ],
+        className="method-note-disclosure",
+    )

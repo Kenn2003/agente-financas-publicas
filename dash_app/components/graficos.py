@@ -3,13 +3,13 @@ import plotly.graph_objects as go
 
 
 CORES_GRAFICO = {
-    "acento": "#C5E86C",
-    "neutro": "#D8DED5",
-    "secundario": "#8CA7B6",
+    "acento": "#B8E90B",
+    "neutro": "#C9CCC5",
+    "secundario": "#9B9F97",
     "positivo": "#8DCC79",
     "negativo": "#E88278",
-    "texto": "#B3B9B0",
-    "grade": "#303630",
+    "texto": "#B6B9B1",
+    "grade": "#292D27",
     "fundo": "rgba(0,0,0,0)",
 }
 ANIMATION_OPTIONS = {
@@ -22,7 +22,7 @@ def figura_vazia(texto, altura=310):
     fig = go.Figure()
     fig.add_annotation(
         text=texto, x=.5, y=.5, xref="paper", yref="paper",
-        showarrow=False, font={"size": 14, "color": "#818A80"},
+        showarrow=False, font={"size": 14, "color": "#7C8178"},
     )
     aplicar_layout(fig, altura=altura)
     fig.update_xaxes(visible=False)
@@ -38,7 +38,7 @@ def aplicar_layout(fig, altura=310, legenda=None, prefixo=None):
         paper_bgcolor=CORES_GRAFICO["fundo"],
         plot_bgcolor=CORES_GRAFICO["fundo"],
         font={"family": "Inter, Segoe UI, Arial, sans-serif", "color": CORES_GRAFICO["texto"], "size": 12},
-        hoverlabel={"bgcolor": "#202520", "bordercolor": "#3A4339", "font": {"color": "#F1F3ED", "size": 13}},
+        hoverlabel={"bgcolor": "#20231F", "bordercolor": "#35392F", "font": {"color": "#F3F4EF", "size": 13}},
         legend=legenda or {"font": {"color": CORES_GRAFICO["texto"]}},
         yaxis_tickprefix=prefixo or "",
     )
