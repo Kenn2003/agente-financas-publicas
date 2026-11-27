@@ -10,3 +10,9 @@ google-genai
 python-dotenv
 scikit-learn==1.8.0
 joblib
+
+dash
+dash-bootstrap-components
+pyarrow
+geopandas
+pyogrio

@@ -84,6 +84,34 @@ Scripts de integração e análise:
 
 Produtos intermediários e finais em `data/processed/` incluem `base_censitaria_palmas_2022.csv`, `palmas_setores_socioeconomicos_2022.gpkg`, `palmas_areas_consolidadas.gpkg`, `intersecoes_geopalmas_ibge.gpkg`, `indicadores_territoriais_palmas_2022.csv`, `indicadores_territoriais_qualificados.csv` e `palmas_areas_socioeconomicas_qualificadas.gpkg`. A reprodução requer os insumos preparados nas etapas anteriores, além de pandas, GeoPandas e Matplotlib. A automatização integral da coleta inicial não foi demonstrada.
 
+### Camada interativa por setor censitário
+
+A página Dash também oferece uma visualização independente dos polígonos do GeoPalmas, diretamente nos setores censitários do Censo 2022. Isso permite cobrir os 733 setores de Palmas sem atribuir CRS aos DWGs locais. A malha oficial do Tocantins chegou em EPSG:4674 (SIRGAS 2000); os códigos `CD_SETOR` foram usados para ligar as tabelas de população e rendimento. Uma geometria dividida em duas feições foi dissolvida pelo código do setor sem somar seus atributos. As áreas foram calculadas após reprojeção para EPSG:31982; o GeoJSON da interface usa EPSG:4326.
+
+Os insumos públicos utilizados e guardados localmente em `data/raw/ibge_2022/` são:
+
+- `TO_setores_CD2022.gpkg`, malha de setores censitários do Tocantins;
+- `Agregados_por_setores_basico_BR_20260520.zip`, com população residente `V0001`;
+- `Agregados_por_setores_renda_responsavel_BR_20260508_csv.zip`, com média `V06004` e mediana `V06006` do rendimento nominal mensal das pessoas responsáveis com rendimento.
+
+Após baixar esses insumos, gere as camadas usadas pela página com:
+
+```bash
+python src/governance/preparar_mapa_setores_ibge.py
+```
+
+O preparo produz `data/processed/ibge_palmas_2022/setores_palmas_2022.gpkg`, em EPSG:31982, `setores_palmas_2022.geojson`, em EPSG:4326, e `metadados.json`. Os arquivos de origem e de saída permanecem em diretórios ignorados pelo Git; o código e esta metodologia são suficientes para reproduzir o preparo quando os insumos oficiais estiverem disponíveis.
+
+Resultados do lote preparado em 26/11/2026: 733 setores, população total de 302.692 habitantes, 660 setores com rendimento mediano disponível e 73 sem mediana publicada. Os 73 casos sem dado aparecem em cinza; não são convertidos em zero.
+
+| Tema interativo | Variável e unidade | Regra da legenda |
+|---|---|---|
+| Rendimento territorial | `V06006`, mediana nominal mensal em R$ de 2022, referente a pessoas responsáveis com rendimento | Faixas: até 1.500; 1.501–3.000; 3.001–5.000; 5.001–8.000; 8.001–12.000; acima de 12.000; sem dado |
+| Densidade demográfica | `V0001 / área geométrica`, habitantes por km² | Quintis dos 733 setores válidos; os limites ficam visíveis na legenda e o valor do setor aparece no painel |
+| Suporte analítico | Classe exploratória por setor | Alto: `V06006` disponível e população >=100; moderado: disponível e população >=30; baixo: disponível e população <30; indisponível: `V06006` ausente |
+
+A classificação de suporte é adaptada à unidade de setor e descreve disponibilidade/escala dos dados; não mede erro, precisão estatística ou cobertura de renda de indivíduos. Os três temas usam valores agregados do Censo 2022 e não permitem inferências individuais. Esta camada cobre setores censitários, não lotes ou as 280 áreas GeoPalmas usadas pelos PNGs antigos; por isso, ela não reproduz exatamente aquelas unidades ou suas estatísticas interpoladas.
+
 ### Mapas
 
 ![Indicador territorial de renda](mapas/01_renda_territorial_qualificada.png)
